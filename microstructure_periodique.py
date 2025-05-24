@@ -218,3 +218,4 @@ def genere_micro(R,l,r,f):
     
     return m
 
+
