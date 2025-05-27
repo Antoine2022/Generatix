@@ -1,0 +1,471 @@
+\documentclass[times, final, 3p]{article}
+\newcommand{\mytitle}{Rigorous bounds for the thermodynamic potential of a maxwellian viscoelastic material}
+\newcommand{\myjournal}{}
+\newcommand{\myauthors}{A. Martin}
+
+\title{\mytitle}
+%\journal{\myjournal}
+
+
+\usepackage[fleqn]{amsmath}
+
+\usepackage{amssymb}
+\usepackage{amsthm}
+\newtheorem{remark}{Remark}
+
+\usepackage{bm}
+\usepackage{tikz}
+
+%\usepackage[breaklinks=true, colorlinks=true, linktocpage=true, pdftitle={\mytitle}, pdfauthor={\myauthors}, pdfsubject={Preprint submitted to \myjournal}, urlcolor=blue]{hyperref}
+
+
+\usepackage{xcolor}
+
+\newcommand{\app}{\text{app}}
+\newcommand{\D}{\mathrm d}
+\newcommand{\dbldot}{\mathbin{\mathord{:}}}
+\let\div\undefined
+\DeclareMathOperator{\div}{div}
+\newcommand{\e}{\mathrm{e}}
+\newcommand{\vs}{\mathrm{v}}
+\newcommand{\tr}{\mathrm{tr}}
+\DeclareMathOperator{\grad}{\mathbf{grad}}
+\newcommand{\per}{\mathrm{per}}
+\newcommand{\reals}{\mathbb R}
+\DeclareMathOperator{\sym}{\mathbf{sym}}
+\newcommand{\tens}[1]{\vec{#1}}
+\renewcommand{\vec}[1]{\bm{\mathrm{#1}}}
+\newcommand{\Eb}{\overline{\vec{E}}}
+\newcommand{\Sa}{\mathcal{S}}
+\newcommand{\Ka}{\mathcal{K}}
+\newcommand{\te}{\tens e}
+\newcommand{\bte}{\overline{\tens e}}
+\newcommand{\beq}{\begin{equation}}
+\newcommand{\eeq}{\end{equation}}
+\newcommand{\beqal}{\begin{equation}\begin{aligned}}
+\newcommand{\eeqal}{\end{aligned}\end{equation}}
+\newcommand{\tsigma}{\tens{\sigma}}
+\newcommand{\alphas}{\tens{\alpha_s}}
+\newcommand{\alphac}{\tens{\alpha_c}}
+\newcommand{\dalphas}{\dot{\tens{\alpha_s}}}
+\newcommand{\dalphac}{\dot{\tens{\alpha_c}}}
+\newcommand{\balphas}{\overline{\tens{\alpha}_s}}
+\newcommand{\dbalphas}{\dot{\overline{\tens{\alpha}_s}}}
+\newcommand{\balpha}{\overline{\tens{\alpha}}}
+\newcommand{\dbalpha}{\dot{\overline{\tens{\alpha}}}}
+\newcommand{\tepsilon}{\tens{\varepsilon}}
+\newcommand{\dtsigma}{\dot{\tens{\sigma}}}
+\newcommand{\dtepsilon}{\dot{\tens{\varepsilon}}}
+
+\bibliographystyle{elsarticle-harv}
+
+\begin{document}
+
+\begin{center}\section*{\mytitle}\end{center}
+\bigskip
+\section{Position of the problem}
+The incremental potential:
+\beqal
+\underset{\balpha}{\min} \underset{\substack{\alphas\in \Sa(\tens C_0)}}{\min}\left\{\underset{\te\in\Ka(\bte)}{\min}w(\te,\alphas)+\Delta t \underset{\dalphac\in\Ka(\dbalpha)}{\min}\varphi(\dalphac+\dalphas)\right\}
+\eeqal
+
+The minimum of the Helmoltz free energy is equivalent to the thermo-elastic problem [...],
+and hence to the Lippmann-Schwinger equation:
+\beqal
+\te+\tens \Gamma_{C_0}(\delta \tens C\dbldot\te)=\bte+\tens \Gamma_{C_0}(\delta\tens C\dbldot\alphas)
+\eeqal
+where $\tens \Gamma_{C_0}$ is relative to $\tens C_0$.
+
+The minimum of the dissipation potential is equivalent to the thermo-elastic problem [...],
+and hence to the Lippmann-Schwinger equation:
+\beqal
+\dalphac+\tens \Gamma_{M_0}(\delta \tens M\dbldot\dalphac)=\dbalpha-\tens \Gamma_{M_0}(\tens M\dbldot\dalphas)
+\eeqal
+where $\tens \Gamma_{M_0}$ is relative to $\tens M_0$.
+
+The fact that $\alphas$ belongs to $\Sa(\tens C_0)$ is equivalent to:
+\beqal
+\text{There exists a $\tens a$ such that}\\
+\alphas=\tens a - \overline{\tens a} - \tens\Gamma_{C_0}(\tens C_0\dbldot\tens a)
+\eeqal
+
+\section{The polarization trial fields}
+We now use the incremental potential to derive a rigorous bound on it.
+If we take $\te^*$ in $\Ka(\bte)$, $\dalphac^*$ in $\Ka(\dbalpha)$, and $\alphas^*$ in $\Sa(\tens C_0)$,
+we can state that the incremental potential computed with those fields will be greater or equal to the minimum.
+In the following we drop the $^*$.
+We hence take:
+\beqal
+\label{te}
+&\te=\bte+\tens \Gamma_{C_0}(\delta\tens C\dbldot\alphas)-\tens \Gamma_{C_0}(\chi\tens \tau_e)\\
+&\text{with}\quad \tens \tau_e \quad\text{uniform}
+\eeqal
+which belongs to $\Ka(\bte)$ for all $\alphas$, and
+\beqal
+\label{dalphac}
+&\dalphac=\dbalpha-\tens \Gamma_{M_0}(\tens M\dbldot\dalphas)-\tens \Gamma_{M_0}(\chi\tens\tau_c)\\
+&\text{with}\quad \tens \tau_c \quad\text{uniform}
+\eeqal
+which belongs to $\Ka(\dbalpha)$ for all $\dalphas$,
+and 
+\beqal
+\label{alphas}
+&\alphas=(\chi-f)\tens a_s - \tens\Gamma_{C_0}(\chi\tens C_0\dbldot\tens a_s)\\
+&\text{with}\quad \tens a_s\quad\text{uniform}
+\eeqal
+which belongs to $\Sa(\tens C_0)$.
+
+Note that \eqref{alphas} gives $\alphas$ which can be used in \eqref{te}, and it gives $\dalphas$:
+\beqal
+\dalphas=\frac{1}{\Delta t}\left[(\chi-f)\tens a_s - \tens\Gamma_{C_0}(\chi\tens C_0\dbldot\tens a_s)-\tens \alpha_{s,n}\right]
+\eeqal
+which can be used in \eqref{dalphac}. We can also assume that $\tens \alpha_{s,n}$ is of the same form (there exists $\tens a_{s,n}$), so that
+\beqal
+\dalphas=(\chi-f)\dot{\tens a}_s - \tens\Gamma_{C_0}(\chi\tens C_0\dbldot\dot{\tens a}_s).
+\eeqal
+
+
+One advantage of the uniformity of the unknowns $\tens \tau_e,\tens \tau_s,\tens\tau_c,\tens a_s$ is that
+they can be taken out of the Green operators:
+\beqal
+\te=\bte&+\tens \Gamma_{C_0}(\delta\tens C\dbldot\alphas)-\tens \Gamma_{C_0}(\chi \tens e_i\otimes\tens e_j)\dbldot\tens \tau_e\\
+=\bte&+\tens \Gamma_{C_0}\left[\delta\tens C\dbldot\left((\chi-f)\tens a_s - \tens\Gamma_{C_0}(\chi\tens C_0\dbldot\tens a_s)\right)\right]-\tens \Gamma_{C_0}(\chi \tens e_i\otimes\tens e_j)\dbldot\tens \tau_e\\
+=\bte&+\tens \Gamma_{C_0}\left[\chi(1-f)\delta\tens C\dbldot\tens a_s\right] - \tens \Gamma_{C_0}\left[\chi\delta\tens C\dbldot\tens\Gamma_{C_0}\left(\chi\tens C_0\dbldot\tens a_s\right)\right]-\tens \Gamma_{C_0}(\chi \tens e_i\otimes\tens e_j)\dbldot\tens \tau_e\\
+=\bte&+\tens \Gamma_{C_0}\left[\chi(1-f)\delta\tens C\dbldot\tens e_i\otimes\tens e_j\right]\dbldot\tens a_s - \tens \Gamma_{C_0}\left[\chi\delta\tens C\dbldot\tens\Gamma_{C_0}\left(\chi\tens C_0\dbldot\tens e_i\otimes\tens e_j\right)\right]\dbldot\tens a_s\\
+&-\tens \Gamma_{C_0}(\chi \tens e_i\otimes\tens e_j)\dbldot\tens \tau_e
+\eeqal
+which still belongs to $\Ka(\bte)$; and
+\beqal
+\dalphac=\dbalpha&-\tens \Gamma_{M_0}\left[\tens M\dbldot\left((\chi-f)\dot{\tens a}_s - \tens\Gamma_{C_0}(\chi\tens C_0\dbldot\dot{\tens a}_s)\right)\right]-\tens \Gamma_{M_0}(\chi \tens e_i\otimes\tens e_j)\dbldot\tens\tau_c\\
+=\dbalpha&-\tens \Gamma_{M_0}\left[(\chi-f)\tens M\dbldot\tens e_i\otimes\tens e_j \right]\dbldot\dot{\tens a}_s + \tens \Gamma_{M_0}\left[ \tens M\dbldot\tens\Gamma_{C_0}(\chi\tens C_0\dbldot\tens e_i\otimes\tens e_j) \right]\dbldot\dot{\tens a}_s \\
+&-\tens \Gamma_{M_0}(\chi \tens e_i\otimes\tens e_j)\dbldot\tens\tau_c
+\eeqal
+which still belongs to $\Ka(\dbalpha)$;
+and 
+\beqal
+&\alphas=(\chi-f)\dot{\tens a}_s - \tens\Gamma_{C_0}(\chi\tens C_0\dbldot \tens e_i\otimes\tens e_j)\dbldot\dot{\tens a}_s\\
+&\text{with}\quad \dot{\tens a}_s\quad\text{uniform}
+\eeqal
+which still belongs to $\Sa(\tens C_0)$.
+
+\paragraph{Sum up}
+\beqal
+&\te(\vec x)=\bte+\tens P_{CC}(\vec x)\dbldot\tens a_s-\tens P_{C_0}(\vec x)\dbldot\tens \tau_e\\
+&\dalphac(\vec x)=\dbalpha-\tens P_{M}(\vec x)\dbldot\dot{\tens a}_s + \tens P_{MC}(\vec x)\dbldot\dot{\tens a}_s -\tens P_{M_0}(\vec x)\dbldot\tens\tau_c\\
+&\alphas(\vec x)=(\chi(\vec x)-f)\tens a_s - \tens P_{C}(\vec x)\dbldot\tens a_s\\
+&\dalphas(\vec x)=(\chi(\vec x)-f)\dot{\tens a}_s - \tens P_{C}(\vec x)\dbldot\dot{\tens a}_s
+\eeqal
+with
+\beqal
+&\tens P_{CC}(\vec x)=\tens \Gamma_{C_0}\left[\chi(1-f)\delta\tens C\dbldot\tens e_i\otimes\tens e_j\right]-\tens \Gamma_{C_0}\left[\chi\delta\tens C\dbldot\tens\Gamma_{C_0}\left(\chi\tens C_0\dbldot\tens e_i\otimes\tens e_j\right)\right]\\
+&\tens P_{C_0}(\vec x)=\tens \Gamma_{C_0}(\chi \tens e_i\otimes\tens e_j)(\vec x)\\
+&\tens P_{M}(\vec x)=\tens \Gamma_{M_0}\left[(\chi-f)\tens M\dbldot\tens e_i\otimes\tens e_j \right]\\
+&\tens P_{MC}(\vec x)=\tens \Gamma_{M_0}\left[ \tens M\dbldot\tens\Gamma_{C_0}(\chi\tens C_0\dbldot\tens e_i\otimes\tens e_j) \right]\\
+&\tens P_{M_0}(\vec x)=\tens \Gamma_{M_0}(\chi \tens e_i\otimes\tens e_j)\\
+&\tens P_{C}(\vec x)=\tens \Gamma_{C_0}(\chi \tens C_0\dbldot\tens e_i\otimes\tens e_j)
+\eeqal
+
+\section{The resulting potentials}
+\subsection{Helmoltz free energy}
+We have to minimize the Helmoltz energy associated to the trial fields $\te$ and $\alphas$
+\beqal
+w(\te,\alphas)=\int\frac{1}{2}(\tens e - \tens \alpha_s)\dbldot\tens C\dbldot(\tens e - \tens \alpha_s)
+\eeqal
+where
+\beqal
+&\te(\vec x)-\alphas(\vec x)=\bte+\tens P(\vec x)\dbldot\tens a_s-\tens P_{C_0}(\vec x)\dbldot\tens \tau_e
+\eeqal
+with
+\beqal
+\tens P(\vec x)=\tens P_{CC}(\vec x)-(\chi(\vec x)-f)\tens I+ \tens P_{C}(\vec x)
+\eeqal
+The minimization is on $\tens \tau_e$ only.
+This minimization (derivation w. r. t. $\tens\tau_e$) gives:
+\beqal
+\label{min_w}
+\int{}^t\tens P_{C_0}\dbldot\tens C\dbldot(\bte+\tens P\dbldot\tens a_s)=\int{}^t\tens P_{C_0}\dbldot\tens C\dbldot\tens P_{C_0}\dbldot\tens\tau_e
+\eeqal
+and the resulting free energy is
+\beqal
+w(\bte,\tens a_s)&=\int\frac{1}{2}(\bte+\tens P(\vec x)\dbldot\tens a_s)\dbldot\tens C\dbldot(\bte+\tens P(\vec x)\dbldot\tens a_s-\tens P_{C_0}(\vec x)\dbldot\tens \tau_e)\\
+&=\int\frac{1}{2}(\bte+\tens P(\vec x)\dbldot\tens a_s)\dbldot\tens C\dbldot(\bte+\tens P(\vec x)\dbldot\tens a_s)-\int\frac{1}{2}(\bte+\tens P(\vec x)\dbldot\tens a_s)\dbldot\tens C\dbldot\tens P_{C_0}(\vec x)\dbldot\tens \tau_e\\
+&=\int\frac{1}{2}(\bte+\tens P(\vec x)\dbldot\tens a_s)\dbldot\tens C\dbldot(\bte+\tens P(\vec x)\dbldot\tens a_s)-\tens\tau_e\dbldot\int\frac{1}{2}{}^t\tens P_{C_0}\dbldot\tens C\dbldot\tens P_{C_0}\dbldot\tens\tau_e
+\eeqal
+
+
+\subsection{Dissipation potential}
+We have to minimize the dissipation potential associated to the trial fields $\dalphac$ and $\dalphas$
+\beqal
+\varphi(\dalphac+\dalphas)=\int\frac{1}{2}(\dalphac + \dalphas)\dbldot\tens M\dbldot(\dalphac + \dalphas)
+\eeqal
+where
+\beqal
+\dalphac(\vec x)+\dalphas(\vec x)=\dbalpha&-\tens P_{M}(\vec x)\dbldot\dot{\tens a}_s + \tens P_{MC}(\vec x)\dbldot\dot{\tens a}_s -\tens P_{M_0}(\vec x)\dbldot\tens\tau_c\\
+&+(\chi(\vec x)-f)\dot{\tens a}_s - \tens P_{C}(\vec x)\dbldot\dot{\tens a}_s\\
+=\dbalpha&+\tens Q(\vec x)\dbldot\dot{\tens a}_s-\tens P_{M_0}(\vec x)\dbldot\tens\tau_c
+\eeqal
+with
+\beqal
+&\tens Q(\vec x)=\tens P_{MC}(\vec x)-\tens P_M(\vec x)+(\chi(\vec x)-f)\tens I-\tens P_C(\vec x).
+\eeqal
+The minimization is on $\tens \tau_c$ only. It gives:
+\beqal
+\label{min_phi}
+\int{}^t\tens P_{M_0}\dbldot\tens M\dbldot(\dbalpha+\tens Q(\vec x)\dbldot\dot{\tens a}_s)=\int{}^t\tens P_{M_0}\dbldot\tens M\dbldot\tens P_{M_0}\dbldot\tens\tau_c
+\eeqal
+and the resulting dissipation potential is
+\beqal
+\varphi(\dbalpha,\tens \alpha_{s,n},\tens a_s)=&\int\frac{1}{2}(\dbalpha+\tens Q(\vec x)\dbldot\dot{\tens a}_s)\dbldot\tens M\dbldot(\dbalpha+\tens Q(\vec x)\dbldot\dot{\tens a}_s)\\
+&-\tens\tau_c\dbldot\int\frac{1}{2}{}^t\tens P_{M_0}\dbldot\tens M\dbldot\tens P_{M_0}\dbldot\tens\tau_c
+\eeqal
+
+\subsection{Incremental potential}
+We then minimize the incremental potential w. r. t. $\tens a_s$, and also w. r. t. $\balpha$.
+First, \eqref{min_w} gives
+\beqal
+&\int{}^t\tens P_{C_0}\dbldot\tens C\dbldot\tens P=\int{}^t\tens P_{C_0}\dbldot\tens C\dbldot\tens P_{C_0}\dbldot\dfrac{\partial\tens\tau_e}{\partial\tens a_s}\\
+&-\int{}^t\tens P_{C_0}\dbldot\tens C=\int{}^t\tens P_{C_0}\dbldot\tens C\dbldot\tens P_{C_0}\dbldot\dfrac{\partial\tens\tau_e}{\partial\balpha}
+\eeqal
+and \eqref{min_phi} gives
+\beqal
+&\frac{1}{\Delta t}\int{}^t\tens P_{M_0}\dbldot\tens M\dbldot\tens Q=\int{}^t\tens P_{M_0}\dbldot\tens M\dbldot\tens P_{M_0}\dbldot\dfrac{\partial\tens\tau_c}{\partial\tens a_s}\\
+&\frac{1}{\Delta t}\int{}^t\tens P_{M_0}\dbldot\tens M=\int{}^t\tens P_{M_0}\dbldot\tens M\dbldot\tens P_{M_0}\dbldot\dfrac{\partial\tens\tau_c}{\partial\balpha}
+\eeqal
+Hence,
+\beqal
+\dfrac{\partial w}{\partial \tens a_s}&=\int{}^t\tens P\dbldot\tens C\dbldot(\bte+\tens P(\vec x)\dbldot\tens a_s)-\tens\tau_e\dbldot\int{}^t\tens P_{C_0}\dbldot\tens C\dbldot\tens P_{C_0}\dbldot\dfrac{\partial\tens\tau_e}{\partial\tens a_s}\\
+&=\int{}^t\tens P\dbldot\tens C\dbldot(\bte+\tens P(\vec x)\dbldot\tens a_s)-\tens\tau_e\dbldot\int{}^t\tens P_{C_0}\dbldot\tens C\dbldot\tens P\\
+&=\int\left[{}^t\tens P(\vec x)-{}^t\tens\rho_0\dbldot\tens \Lambda^{-1}\dbldot{}^t\tens P_{C_0}(\vec x)\right]\dbldot\tens C\dbldot(\bte+\tens P(\vec x)\dbldot\tens a_s)
+\eeqal
+and
+\beqal
+\dfrac{\partial \varphi}{\partial \tens a_s}&=\frac{1}{\Delta t}\int\left[{}^t\tens Q(\vec x)-{}^t\tens\pi_0\dbldot\tens \Theta^{-1}\dbldot{}^t\tens P_{M_0}(\vec x)\right]\dbldot\tens M\dbldot(\dbalpha+\tens Q(\vec x)\dbldot\dot{\tens a}_s)
+\eeqal
+with
+\beqal
+&\tens \Lambda=\int{}^t\tens P_{C_0}\dbldot\tens C\dbldot\tens P_{C_0}\\
+&\tens \Theta=\int{}^t\tens P_{M_0}\dbldot\tens M\dbldot\tens P_{M_0}\\
+&\tens \rho_0=\int{}^t\tens P_{C_0}\dbldot\tens C\dbldot\tens P\\
+&\tens \pi_0=\int{}^t\tens P_{M_0}\dbldot\tens M\dbldot\tens Q\\
+\eeqal
+The first evolution equation is then given by
+\beqal
+\int&\left[{}^t\tens P(\vec x)-{}^t\tens\rho_0\dbldot\tens \Lambda^{-1}\dbldot{}^t\tens P_{C_0}(\vec x)\right]\dbldot\tens C\dbldot(\bte+\tens P(\vec x)\dbldot\tens a_s)\\&+ \int\left[{}^t\tens Q(\vec x)-{}^t\tens\pi_0\dbldot\tens \Theta^{-1}\dbldot{}^t\tens P_{M_0}(\vec x)\right]\dbldot\tens M\dbldot(\dbalpha+\tens Q(\vec x)\dbldot\dot{\tens a}_s)=0
+\eeqal
+which is also
+\beqal
+\int&\left[{}^t\tens P(\vec x)-{}^t\tens\rho_0\dbldot\tens \Lambda^{-1}\dbldot{}^t\tens P_{C_0}(\vec x)\right]\dbldot\tens C\dbldot(\bte+\tens P(\vec x)\dbldot\tens a_s)\\&+ \int\left[{}^t\tens Q(\vec x)-{}^t\tens\pi_0\dbldot\tens \Theta^{-1}\dbldot{}^t\tens P_{M_0}(\vec x)\right]\dbldot\tens M\dbldot(\dbalpha+\tens Q(\vec x)\dbldot\dot{\tens a}_s)=0
+\eeqal
+with
+\beqal
+\tens \rho&=\int{}^t\tens P(\vec x)\dbldot\tens C\dbldot\tens P(\vec x)\\
+\tens \pi&=\int{}^t\tens Q(\vec x)\dbldot\tens M\dbldot\tens Q(\vec x)
+\eeqal
+As for the derivation w. r. t. $\balpha$,
+\beqal
+\dfrac{\partial w}{\partial \balpha}&=-\int\tens C\dbldot(\bte+\tens P(\vec x)\dbldot\tens a_s)+\tens\tau_e\dbldot\int{}^t\tens P_{C_0}\dbldot\tens C\\
+&=\int\left[{}^t\tens\eta_0\dbldot\tens \Lambda^{-1}\dbldot{}^t\tens P_{C_0}(\vec x)-\tens I\right]\dbldot\tens C\dbldot(\bte+\tens P(\vec x)\dbldot\tens a_s)
+\eeqal
+and
+\beqal
+\dfrac{\partial \varphi}{\partial \balpha}&=\int\left[\frac{1}{\Delta t}\tens I-\frac{1}{\Delta t}{}^t\tens\zeta_0\dbldot\tens \Theta^{-1}\dbldot{}^t\tens P_{M_0}(\vec x)\right]\dbldot\tens M\dbldot(\dbalpha+\tens Q(\vec x)\dbldot\dot{\tens a}_s)
+\eeqal
+with
+\beqal
+&\tens \eta_0=\int{}^t\tens P_{C_0}\dbldot\tens C\\
+&\tens \zeta_0=\int{}^t\tens P_{M_0}\dbldot\tens M\\
+&\tens \eta=\int{}^t\tens P\dbldot\tens C\\
+&\tens \zeta=\int{}^t\tens Q\dbldot\tens M\\
+\eeqal
+The second evolution equation is then
+\beqal
+\int&\left[{}^t\tens\eta_0\dbldot\tens \Lambda^{-1}\dbldot{}^t\tens P_{C_0}(\vec x)-\tens I\right]\dbldot\tens C\dbldot(\bte+\tens P(\vec x)\dbldot\tens a_s)\\&+\int\left[\tens I-{}^t\tens\zeta_0\dbldot\tens \Theta^{-1}\dbldot{}^t\tens P_{M_0}(\vec x)\right]\dbldot\tens M\dbldot(\dbalpha+\tens Q(\vec x)\dbldot\dot{\tens a}_s)=0
+\eeqal
+
+\subsection{Summary}
+We then have two differential equations:
+\beqal
+&\tens\gamma_1\dbldot(\overline{\tens \varepsilon}-\balpha)+\tens\beta_1\dbldot\tens a_s+\tens\lambda_1\dbldot\dbalpha+\tens \mu_1\dbldot\dot{\tens a}_s=0\\
+&\tens\gamma_2\dbldot(\overline{\tens \varepsilon}-\balpha)+\tens\beta_2\dbldot\tens a_s+\tens\lambda_2\dbldot\dbalpha+\tens \mu_2\dbldot\dot{\tens a}_s=0\\
+\eeqal
+with
+\beqal
+&\tens \gamma_1=\tens\eta-{}^t\tens\rho_0\dbldot\tens \Lambda^{-1}\dbldot\tens\eta_0\\
+&\tens \beta_1=\tens\rho-{}^t\tens\rho_0\dbldot\tens \Lambda^{-1}\dbldot\tens \rho_0\\
+&\tens \lambda_1=\tens\zeta-{}^t\tens\pi_0\dbldot\tens \Theta^{-1}\dbldot\tens\zeta_0\\
+&\tens \mu_1=\tens\pi-{}^t\tens\pi_0\dbldot\tens \Theta^{-1}\dbldot\tens \pi_0\\
+&\tens \gamma_2=-\tens C^V+{}^t\tens\eta_0\dbldot\tens \Lambda^{-1}\dbldot\tens\eta_0\\
+&\tens \beta_2=-{}^t\tens\eta+{}^t\tens\eta_0\dbldot\tens \Lambda^{-1}\dbldot\tens \rho_0\\
+&\tens \lambda_2=\tens M^V-{}^t\tens\zeta_0\dbldot\tens \Theta^{-1}\dbldot\tens\zeta_0\\
+&\tens \mu_2={}^t\tens\zeta-{}^t\tens\zeta_0\dbldot\tens \Theta^{-1}\dbldot\tens \pi_0
+\eeqal
+
+
+\section{Macroscopic stress and tangent operator}
+The macroscopic stress is given by
+\beqal
+\overline{\tsigma}&=\dfrac{\partial \overline{w}}{\partial\overline{\tens\varepsilon}}\\
+&=\tens C^V\dbldot\bte+{}^t\tens\eta\dbldot\tens a_s-\tens\tau_e\dbldot\tens\eta_0\\
+&=\tens C^V\dbldot\bte+{}^t\tens\eta\dbldot\tens a_s-{}^t\tens\eta_0\dbldot\tens\Lambda^{-1}\dbldot(\tens\eta_0\dbldot\bte+\tens\rho_0\dbldot\tens a_s)\\
+&=-\tens\gamma_2\dbldot\bte-\tens\beta_2\dbldot\tens a_s
+\eeqal
+And the macroscopic tangent operator is given by
+\beqal
+\dfrac{\partial\overline{\tsigma}}{\partial\Delta\overline{\tens\varepsilon}}=-\tens\gamma_2\dbldot\left(\tens I-\dfrac{\partial \balpha}{\partial\overline{\tens\varepsilon}}\right)-\tens\beta_2\dbldot\dfrac{\partial \tens a_s}{\partial\overline{\tens\varepsilon}}
+\eeqal
+and the derivatives are obtained by deriving the two differential equations, which gives:
+\begin{equation}
+\begin{pmatrix}
+\dfrac{\tens\lambda_1}{\Delta t}-\tens\gamma_1&\dfrac{\tens\mu_1}{\Delta t}+\tens\beta_1\\
+\\
+\dfrac{\tens\lambda_2}{\Delta t}-\tens\gamma_2&\dfrac{\tens\mu_2}{\Delta t}+\tens\beta_2
+\end{pmatrix}
+\begin{pmatrix}
+\dfrac{\partial \balpha}{\partial\overline{\tens\varepsilon}}\\
+\\
+\dfrac{\partial \tens a_s}{\partial\overline{\tens\varepsilon}}
+\end{pmatrix}
+=\begin{pmatrix}
+-\tens\gamma_1\\
+\\
+\\
+-\tens\gamma_2
+\end{pmatrix}
+\end{equation}
+
+
+\appendix
+\section{Evolution equations}
+\subsection{First evolution equation}
+\beqal
+\int&\left[{}^t\tens P(\vec x)-{}^t\tens\rho_0\dbldot\tens \Lambda^{-1}\dbldot{}^t\tens P_{C_0}(\vec x)\right]\dbldot\tens C\dbldot(\bte+\tens P(\vec x)\dbldot\tens a_s)\\&+ \int\left[{}^t\tens Q(\vec x)-{}^t\tens\pi_0\dbldot\tens \Theta^{-1}\dbldot{}^t\tens P_{M_0}(\vec x)\right]\dbldot\tens M\dbldot(\dbalpha+\tens Q(\vec x)\dbldot\dot{\tens a}_s)=0
+\eeqal
+We can note that
+\beqal
+\frac{\tens H_n(\vec x)+\tens Q(\vec x)\dbldot\tens a_s}{\Delta t}=\tens u -\tens \Gamma_{M_0}(\tens M\dbldot\tens u)\qquad(=\tens M\dbldot\dalphas)
+\eeqal
+with [...]
+Hence assuming that
+\beqal
+\tens\alpha_{s,n}(\vec x)=(\chi(\vec x)-f)\tens a_{s,n} - \tens P_{C}(\vec x)\dbldot\tens a_{s,n}
+\eeqal
+with $\tens a_{s,n}$ uniform, we have
+\beqal
+\tens u=(\chi(\vec x)-f)\dot{\tens a}_s - \tens P_{C}(\vec x)\dbldot\dot{\tens a}_s
+\eeqal
+and
+\beqal
+\frac{\tens H_n(\vec x)+\tens Q(\vec x)\dbldot\tens a_s}{\Delta t}&=\left[(\chi(\vec x)-f)\tens I-\tens P_{C}(\vec x)\right]\dbldot\dot{\tens a}_s-\tens \Gamma_{M_0}\left[\tens M\dbldot\left((\chi(\vec x)-f)-\tens P_{C}(\vec x)\right)\dbldot\tens e_i\otimes\tens e_j\right]\dbldot\dot{\tens a}_s\\
+&=\left[(\chi(\vec x)-f)\tens I-\tens P_{C}(\vec x)-\tens P_M(\vec x)+\tens P_{MC}(\vec x)\right]\dbldot\dot{\tens a}_s\\
+(&=\tens Q(\vec x)\dbldot\dot{\tens a}_s)
+\eeqal
+We then have
+\beqal
+\int&\left[{}^t\tens P(\vec x)-{}^t\tens\rho_0\dbldot\tens \Lambda^{-1}\dbldot{}^t\tens P_{C_0}(\vec x)\right]\dbldot\tens C\dbldot(\bte+\tens P(\vec x)\dbldot\tens a_s)\\&+ \int\left[{}^t\tens Q(\vec x)-{}^t\tens\pi_0\dbldot\tens \Theta^{-1}\dbldot{}^t\tens P_{M_0}(\vec x)\right]\dbldot\tens M\dbldot(\dbalpha+\tens Q(\vec x)\dbldot\dot{\tens a}_s)=0
+\eeqal
+\beqal
+\tens \rho&\dbldot\tens a_s+\tens\eta\dbldot\bte-{}^t\tens\rho_0\dbldot\tens \Lambda^{-1}\dbldot\tens \rho_0\dbldot\tens a_s-{}^t\tens\rho_0\dbldot\tens \Lambda^{-1}\dbldot\tens\eta_0\dbldot\bte\\&+\tens \pi\dbldot\dot{\tens a}_s+\tens\zeta\dbldot\dbalpha-{}^t\tens\pi_0\dbldot\tens \Theta^{-1}\dbldot\tens \pi_0\dbldot\dot{\tens a}_s-{}^t\tens\pi_0\dbldot\tens \Theta^{-1}\dbldot\tens\zeta_0\dbldot\dbalpha=0
+\eeqal
+\subsection{Second evolution equation}
+\beqal
+\int&\left[{}^t\tens\eta_0\dbldot\tens \Lambda^{-1}\dbldot{}^t\tens P_{C_0}(\vec x)-\tens I\right]\dbldot\tens C\dbldot(\bte+\tens P(\vec x)\dbldot\tens a_s)\\&+\int\left[\tens I-{}^t\tens\zeta_0\dbldot\tens \Theta^{-1}\dbldot{}^t\tens P_{M_0}(\vec x)\right]\dbldot\tens M\dbldot(\dbalpha+\tens Q(\vec x)\dbldot\dot{\tens a}_s)=0
+\eeqal
+is also
+\beqal
+\int&\left[{}^t\tens\eta_0\dbldot\tens \Lambda^{-1}\dbldot{}^t\tens P_{C_0}(\vec x)-\tens I\right]\dbldot\tens C\dbldot(\bte+\tens P(\vec x)\dbldot\tens a_s)\\&+\int\left[\tens I-{}^t\tens\zeta_0\dbldot\tens \Theta^{-1}\dbldot{}^t\tens P_{M_0}(\vec x)\right]\dbldot\tens M\dbldot(\dbalpha+\tens Q(\vec x)\dbldot\dot{\tens a}_s)=0
+\eeqal
+\beqal
+-&{}^t\tens\eta\dbldot\tens a_s-\int{}^t\tens C(\vec x)\dbldot\bte+{}^t\tens\eta_0\dbldot\tens \Lambda^{-1}\dbldot\tens\eta_0\dbldot\bte+{}^t\tens\eta_0\dbldot\tens \Lambda^{-1}\dbldot\tens \rho_0\dbldot\tens a_s\\&+\int\tens M(\vec x)\dbldot\dbalpha+{}^t\tens\zeta\dbldot\dot{\tens a}_s-{}^t\tens\zeta_0\dbldot\tens \Theta^{-1}\dbldot\tens\zeta_0\dbldot\dbalpha-{}^t\tens\zeta_0\dbldot\tens \Theta^{-1}\dbldot\tens \pi_0\dbldot\dot{\tens a}_s=0
+\eeqal
+\section{Computation of some tensors}
+\subsection{}
+\beqal
+\tens A(\vec x)=(\chi(\vec x)-f)\tens I-\tens \Gamma_{C_0}(\chi \tens C_0\dbldot\tens e_i\otimes\tens e_j)
+\eeqal
+\beqal
+\tens P(\vec x)=\tens \Gamma_{C_0}\left[\chi\delta\tens C\dbldot\tens A\right]-\tens A(\vec x)
+\eeqal
+\beqal
+&\tens Q(\vec x)=\tens A(\vec x)-\tens \Gamma_{M_0}\left[ \tens M\dbldot\tens A \right]
+\eeqal
+\beqal
+&\tens \Lambda=\int{}^t\tens P_{C_0}\dbldot\tens C\dbldot\tens P_{C_0}={}^t\tens P_0^C\dbldot\left(\delta\tens C\dbldot\tens P_0^C-\tens I\right)\\
+&\tens \Theta=\int{}^t\tens P_{M_0}\dbldot\tens M\dbldot\tens P_{M_0}={}^t\tens P_0^M\dbldot\left(\delta\tens M\dbldot\tens P_0^M-\tens I\right)\\
+&\tens \rho_0=\int{}^t\tens P_{C_0}\dbldot\tens C\dbldot\tens P\\
+&\tens \pi_0=\int{}^t\tens P_{M_0}\dbldot\tens M\dbldot\tens Q\\
+\eeqal
+\beqal
+\tens \rho&=\int{}^t\tens P(\vec x)\dbldot\tens C\dbldot\tens P(\vec x)\\
+\tens \pi&=\int{}^t\tens Q(\vec x)\dbldot\tens M\dbldot\tens Q(\vec x)
+\eeqal
+\beqal
+&\tens \eta_0=\int{}^t\tens P_{C_0}\dbldot\tens C\\
+&\tens \zeta_0=\int{}^t\tens P_{M_0}\dbldot\tens M\\
+&\tens \eta=\int{}^t\tens P\dbldot\tens C\\
+&\tens \zeta=\int{}^t\tens Q\dbldot\tens M\\
+\eeqal
+
+\subsection{}
+We have
+\beqal
+\int{}^t\tens P_{C_0}\dbldot\tens C\dbldot\tens P_{C_0}=\int{}^t\tens P_{C_0}\dbldot\tens C_0\dbldot\tens P_{C_0}+\int{}^t\tens P_{C_0}\dbldot\delta \tens C\dbldot\tens P_{C_0}
+\eeqal
+The first integral can be written as
+\beqal
+\int{}^t\tens P_{C_0}\dbldot\tens C_0\dbldot\tens P_{C_0}&=\int{}^t\tens P_{C_0}\dbldot\left[\tens C_0\dbldot\tens \Gamma_{C_0}(\chi\tens e_i\otimes\tens e_j)-\chi \tens e_i\otimes\tens e_j\right]-\int{}^t\tens P_{C_0}\dbldot\chi \tens e_i\otimes\tens e_j\\
+&=0-\int{}^t\tens P_{C_0}\dbldot\chi \tens e_i\otimes\tens e_j\\
+&=-f{}^t\tens P_0^C
+\eeqal
+
+and the second is 
+\beqal
+\int{}^t\tens P_{C_0}\dbldot\delta \tens C\dbldot\tens P_{C_0}&={}^t\tens P_0^C\dbldot(\tens C_1 -\tens C_0)\dbldot\tens P_0^C
+\eeqal
+
+\subsection{}
+Moreover,
+\beqal
+\int{}^t\tens P_{M_0}\dbldot\tens M\dbldot\tens P_{M_0}=\int{}^t\tens P_{M_0}\dbldot\tens M_0\dbldot\tens P_{M_0}+\int{}^t\tens P_{M_0}\dbldot\delta \tens M\dbldot\tens P_{M_0}
+\eeqal
+The first integral can be written as
+\beqal
+\int{}^t\tens P_{M_0}\dbldot\tens M_0\dbldot\tens P_{M_0}&=\int{}^t\tens P_{M_0}\dbldot\left[\tens M_0\dbldot\tens \Gamma_{M_0}(\chi\tens e_i\otimes\tens e_j)-\chi \tens e_i\otimes\tens e_j\right]-\int{}^t\tens P_{M_0}\dbldot\chi \tens e_i\otimes\tens e_j\\
+&=0-\int{}^t\tens P_{M_0}\dbldot\chi \tens e_i\otimes\tens e_j\\
+&=-f{}^t\tens P_0^M
+\eeqal
+
+and the second is 
+\beqal
+\int{}^t\tens P_{M_0}\dbldot\delta \tens M\dbldot\tens P_{M_0}&={}^t\tens P_0^M\dbldot(\tens M_1 -\tens M_0)\dbldot\tens P_0^M
+\eeqal
+
+
+\subsection{}
+\beqal
+\int\tens C(\vec x)\dbldot\tens P(\vec x)=\int\tens C_0\dbldot\tens P(\vec x)+\int\delta\tens C\dbldot\tens P(\vec x)
+\eeqal
+The first integral is, because of the fact that $\int \tens P_{CC} =0$ and $\int \tens P_{C} =0$,
+\beqal
+\int\tens C_0\dbldot\tens P(\vec x)=-\int (\chi-f)\tens C_0 =0
+\eeqal
+The second one is
+\beqal
+\int\delta\tens C(\vec x)\dbldot\tens P(\vec x)&=\delta\tens C\dbldot\int\chi(\vec x)\tens P(\vec x)\\
+&=-f(1-f)\delta\tens C+\delta\tens C
+\eeqal
+Hence,
+\subsection{}
+In the same way,
+\beqal
+\int{}^t\tens P(\vec x)\dbldot\tens C(\vec x)\dbldot\tens P(\vec x)=\int{}^t\tens P(\vec x)\dbldot\tens C_0\dbldot\tens P(\vec x)+\int{}^t\tens P(\vec x)\dbldot\delta\tens C\dbldot\tens P(\vec x)
+\eeqal
+The first integral is
+
+and the second
+
+Hence
+\end{document}
+
+% Local Variables:
+% fill-column: 80
+% End:

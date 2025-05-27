@@ -1,0 +1,75 @@
+\documentclass[times, final, 3p]{article}
+\newcommand{\mytitle}{}
+\newcommand{\myjournal}{}
+\newcommand{\myauthors}{A. Martin}
+
+\title{\mytitle}
+%\journal{\myjournal}
+
+
+\usepackage[fleqn]{amsmath}
+
+\usepackage{amssymb}
+\usepackage{amsthm}
+\newtheorem{remark}{Remark}
+
+\usepackage{bm}
+\usepackage{tikz}
+
+%\usepackage[breaklinks=true, colorlinks=true, linktocpage=true, pdftitle={\mytitle}, pdfauthor={\myauthors}, pdfsubject={Preprint submitted to \myjournal}, urlcolor=blue]{hyperref}
+
+
+\usepackage{xcolor}
+
+\newcommand{\app}{\text{app}}
+\newcommand{\D}{\mathrm d}
+\newcommand{\dbldot}{\mathbin{\mathord{:}}}
+\let\div\undefined
+\DeclareMathOperator{\div}{div}
+\newcommand{\eff}{\mathrm{eff}}
+\newcommand{\inter}{\mathrm{int}}
+\newcommand{\EIM}{\mathrm{EIM}}
+\newcommand{\Esh}{\mathrm{Esh}}
+\DeclareMathOperator{\grad}{\mathbf{grad}}
+\newcommand{\I}{\mathrm i}
+\newcommand{\integers}{\mathbb Z}
+\newcommand{\jump}[1]{[\![#1]\!]}
+\newcommand{\M}{\mathrm{m}}
+\newcommand{\per}{\mathrm{per}}
+\newcommand{\PV}{\operatorname*{PV}}
+\newcommand{\reals}{\mathbb R}
+\DeclareMathOperator{\sym}{\mathbf{sym}}
+\newcommand{\tens}[1]{\vec{#1}}
+\renewcommand{\vec}[1]{\bm{\mathrm{#1}}}
+\newcommand{\rot}[1]{\vec{rot}\ \vec{#1}}
+\newcommand{\taumoy}{\overline{\vec{\tau}}}
+\newcommand{\Eb}{\overline{\vec{E}}}
+
+\bibliographystyle{elsarticle-harv}
+
+\begin{document}
+
+
+\section{Produit scalaire}
+Soit $\tens G_1(\vec x)$ et $\tens G(\vec x)$ deux champs vectoriels
+tridimensionnels (donc 3 composantes chacun), on aimerait réaliser l'intégrale
+suivante :
+\begin{equation}
+\int_{\vec x_\alpha\in M_\alpha}\tens G_1(\vec x_\alpha)\cdot\tens G_2(\vec x_\alpha)\,\D^3\,\vec x_\alpha
+\end{equation}
+où $M_\alpha$ est le matériau $\alpha$.
+Par ailleurs, soit un champ vectoriel 3d $\tens G(\vec x)$, on aimerait pouvoir construire un champ (vectoriel 3d) $\tens G_2(\vec x)$
+tel que 
+\begin{equation}
+\forall \vec x,\quad\tens G(\vec x)=f(\tens G_2(\vec x))
+\end{equation}
+où $f$ est une fonction simple (cette fonctionnalité existe peut-être déjà ?)
+
+
+
+
+\end{document}
+
+% Local Variables:
+% fill-column: 80
+% End:

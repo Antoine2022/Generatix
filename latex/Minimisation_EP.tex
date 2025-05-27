@@ -1,0 +1,504 @@
+\documentclass[times, final, 3p]{article}
+\newcommand{\mytitle}{}
+\newcommand{\myjournal}{}
+\newcommand{\myauthors}{A. Martin}
+
+\title{\mytitle}
+%\journal{\myjournal}
+
+
+\usepackage[fleqn]{amsmath}
+
+\usepackage{amssymb}
+\usepackage{amsthm}
+\newtheorem{remark}{Remark}
+
+\usepackage{bm}
+\usepackage{tikz}
+
+%\usepackage[breaklinks=true, colorlinks=true, linktocpage=true, pdftitle={\mytitle}, pdfauthor={\myauthors}, pdfsubject={Preprint submitted to \myjournal}, urlcolor=blue]{hyperref}
+
+
+\usepackage{xcolor}
+
+\newcommand{\app}{\text{app}}
+\newcommand{\D}{\mathrm d}
+\newcommand{\dbldot}{\mathbin{\mathord{:}}}
+\let\div\undefined
+\DeclareMathOperator{\div}{div}
+\newcommand{\eff}{\mathrm{eff}}
+\newcommand{\beqal}{\begin{equation}\begin{aligned}}
+\newcommand{\eeqal}{\end{aligned}\end{equation}}
+\DeclareMathOperator{\grad}{\mathbf{grad}}
+\newcommand{\I}{\mathrm i}
+\newcommand{\integers}{\mathbb Z}
+\newcommand{\jump}[1]{[\![#1]\!]}
+\newcommand{\M}{\mathrm{m}}
+\newcommand{\per}{\mathrm{per}}
+\newcommand{\PV}{\operatorname*{PV}}
+\newcommand{\reals}{\mathbb R}
+\DeclareMathOperator{\sym}{\mathbf{sym}}
+\newcommand{\tens}[1]{\vec{#1}}
+\renewcommand{\vec}[1]{\bm{\mathrm{#1}}}
+\newcommand{\rot}[1]{\vec{rot}\ \vec{#1}}
+\newcommand{\taumoy}{\overline{\vec{\tau}}}
+\newcommand{\Eb}{\overline{\vec{E}}}
+
+\bibliographystyle{elsarticle-harv}
+
+\begin{document}
+
+
+\section{Minimisation of potential energy}
+
+We consider
+a periodic cell \(Z\) of a random heterogeneous
+material. The conductivity at \(\vec x\in Z\) is \(\tens\sigma(\vec x)\)
+(symmetric, positive definite, second-order tensor); \(\vec E(\vec x)\),
+\(\phi(\vec x)\) and \(\vec j(\vec x)\) denote the electric field, the electric
+potential and the volumic current, respectively,
+at point \(\vec x\). The apparent conductivity of the cell \(Z\),
+\(\tens\sigma^\app\), is found from the solution to
+the following problem
+\begin{gather}
+  \label{eq:20211209153049}
+  Z:\quad\div{\vec{j}}=0,\\
+  \label{eq:20211209153053}
+  Z:\quad\vec{j}=\tens{\sigma}\cdot\vec{E},\\
+  \label{eq:20211209153103}
+  Z:\quad\vec{E}=\overline{\vec E}+\grad\phi^\per,
+\end{gather}
+where $\phi^\per$ is a $Z$-periodic field, $\vec{j}$ is a $Z$-antiperiodic field, and $\overline{\vec E}$
+is a prescribed constant vector. Eq.~\eqref{eq:20211209153103} ensures that the electric field is curl-free,
+with $\overline{\vec E}=\langle\vec E\rangle$, where angle brackets
+denote volume averages over the cell \(Z\).
+We consider a biphasic cell with a matrix whose conductivity is $\tens \sigma_0$ and another phase whose
+conductivity is $\tens \sigma_1$.
+
+We introduce the linear Green operator \(\tens{\Gamma}_0^\per\),
+associated with the conductivity \(\tens\sigma_0\).
+
+The electrical field solution of problem \eqref{eq:20211209153049}-\eqref{eq:20211209153103} minimizes the following energy:
+\begin{equation}
+\label{eq_EP}
+  \mathcal{W}(\vec E)=\frac12\int_Z\vec E\cdot\tens\sigma\cdot\vec E.
+\end{equation}
+
+We then consider the following electrical field:
+\begin{equation}
+\vec E=\overline{\vec{E}}-\tens{\Gamma}_0^\per(\chi\overline{\vec{\tau}})
+\end{equation}
+where \(\overline{\vec \tau}\) is a constant vector and $\chi$ denotes characteristic function of medium whose conductivity is $\tens \sigma_1$.
+This field is curl-free, and its average is $\overline{\vec{E}}$.
+We then define
+\begin{equation}
+\begin{aligned}
+\mathcal{E}(\overline{\vec{\tau}})&=\mathcal{W}\left(\overline{\vec{E}}-\tens{\Gamma}_0^\per(\chi\overline{\vec{\tau}})\right)\\
+&=\frac12\int_Z\left(\overline{\vec{E}}-\tens{\Gamma}_0^\per(\chi\overline{\vec{\tau}})\right)\cdot\tens\sigma\cdot\left(\overline{\vec{E}}-\tens{\Gamma}_0^\per(\chi\overline{\vec{\tau}})\right)\\
+&=\frac12\int_Z\left(\overline{\vec{E}}-\tens H\cdot\overline{\vec{\tau}}\right)\cdot\tens\sigma\cdot\left(\overline{\vec{E}}-\tens H\cdot\overline{\vec{\tau}}\right)
+\end{aligned}
+\end{equation}
+where
+\beqal
+\tens H_{ij}(\vec x)&=\tens{\Gamma}_{i}^{0,\per}(\chi\vec e_j)(\vec x), \qquad\text{(symmetric if isotropy of $\tens \sigma_0$ ?)}
+\eeqal 
+and we derive this function with respect to $\overline{\vec{\tau}}$:
+\begin{equation}
+\frac{\partial \mathcal{E}}{\partial \overline{\vec{\tau}}}=-\int_Z{}^t\tens H\cdot\tens\sigma\cdot\left(\overline{\vec{E}}-\tens H\cdot\overline{\vec{\tau}}\right)
+\end{equation}
+which is null if
+\begin{equation}
+\int_Z{}^t\tens H\cdot\tens\sigma\cdot\overline{\vec{E}}=\int_Z{}^t\tens H\cdot\tens\sigma\cdot\tens H\cdot \overline{\vec{\tau}}.
+\end{equation}
+Because $\tens \sigma$ is positive definite we can (except if $\tens H$ is null everywhere) obtain a candidate $\overline{\vec{\tau}}$:
+\begin{equation}
+ \overline{\vec{\tau}}=\tens G^{-1}\int_Z{}^t\tens H\cdot\tens\sigma\cdot\overline{\vec{E}},
+\end{equation}
+where
+\begin{equation}
+\tens G=\int_Z{}^t\tens H\cdot\tens\sigma\cdot\tens H
+\end{equation}
+defines a positive definite quadratic form of $\tens{\Gamma}_0^\per$.
+Coming back to the energy, we can state that
+\begin{equation}
+\begin{aligned}
+\frac 12\overline{\vec E}\cdot\tens\sigma^\app\cdot\overline{\vec E}&\leq\mathcal{E}(\overline{\vec{\tau}})\\
+&\leq\frac12\int_Z\overline{\vec{E}}\cdot\tens\sigma\cdot\overline{\vec{E}}-\frac 12\overline{\vec \tau}\cdot\tens G\cdot\overline{\vec \tau}\\
+&\leq\frac 12\overline{\vec{E}}\cdot\tens\sigma^{Voigt}\cdot\overline{\vec{E}}-\frac 12\overline{\vec \tau}\cdot\tens G\cdot\overline{\vec \tau}\\
+\end{aligned}
+\end{equation}
+
+\section{Minimisation of the complementary energy}
+\subsection{Current density version of Lippmann-Schwinger equation}
+It is known that another problem can be considered to compute another apparent conductivity:
+\begin{gather}
+  \label{eq1}
+  Z:\quad\div{\vec{j}}=0,\qquad  \langle\vec j\rangle = \overline{\vec J},\\
+  \label{eq3}
+  Z:\quad\vec{j}=\tens{\sigma}\cdot\vec{E},\\
+  \label{eq4}
+  Z:\quad\vec{E}=\langle\vec E\rangle+\grad\phi^\per.
+\end{gather}
+where $\overline{\vec J}$ is a prescribed constant vector, and $\vec j$ remains a $Z$-antiperiodic field.
+
+The above problem can be rewritten as
+\begin{gather}
+\label{eq11}
+  Z:\quad\div{\vec{j}}=0, \qquad\langle\vec j\rangle = \overline{\vec J},\\
+\label{eq22}
+  Z:\quad\vec{E}=\tens{\rho}_0\cdot\vec{j}+\vec E^T,\qquad \vec E^T=(\tens\rho-\tens\rho_0)\cdot\vec j,\\
+\label{eq33}
+  Z:\quad\vec{E}=\langle\vec E\rangle+\grad\phi^\per\\
+\end{gather}
+where $\vec \rho=\vec \sigma^{-1}$.
+
+And the solution of this problem is also the solution of this equation:
+\begin{equation}
+\label{eq_++}
+\vec j= \overline{\vec J} + \tens\sigma_0\langle\vec E^T\rangle + \tens\sigma_0\cdot\tens\Gamma_0^\per\left(\tens\sigma_0\cdot\vec E^T\right)-\tens\sigma_0\cdot\vec E^T\qquad\text{with\ \ } \vec E^T=(\tens\rho-\tens\rho_0)\cdot\vec j.
+\end{equation}
+Indeed, (i) the average of this field is $\overline{\vec J}$, (ii) its divergence is null because the following equation is verified (by definition of $\tens\Gamma_0^\per$):
+\begin{equation}
+\div\left[\tens\sigma_0\cdot\tens\Gamma_0^\per\left(\tens\sigma_0\cdot\vec E^T\right)-\tens\sigma_0\cdot\vec E^T\right]=0
+\end{equation}
+and (iii) the corresponding field $\vec E=\tens{\rho}_0\cdot\vec{j}+\vec E^T$ can be written
+\begin{equation}
+\vec E=\tens{\rho}_0\cdot\vec{j}+\vec E^T=\tens{\rho}_0\cdot\overline{\vec{J}}+\langle\vec E^T\rangle+\tens\Gamma_0^\per\left(\tens\sigma_0\cdot\vec E^T\right)-\vec E^T+\vec E^T=\tens{\rho}_0\cdot\overline{\vec{J}}+\langle\vec E^T\rangle+\tens\Gamma_0^\per\left(\tens\sigma_0\cdot\vec E^T\right)
+\end{equation}
+which is Eq.\eqref{eq33} with $\langle\vec E\rangle=\tens{\rho}_0\cdot\overline{\vec{J}}+\langle\vec E^T\rangle$. Hence, rewriting Eq.\eqref{eq_++},
+\begin{equation}
+\vec j-\overline{\vec J} = -\tens\sigma_0\left(\vec E^T-\langle\vec E^T\rangle\right) + \tens\sigma_0\cdot\tens\Gamma_0^\per\left(\tens\sigma_0\cdot\vec E^T\right)\qquad\text{with\ \ } \vec E^T=(\tens\rho-\tens\rho_0)\cdot\vec j.
+\end{equation}
+Or
+\begin{equation}
+\vec j^* = \vec {\tau}^* - \tens\sigma_0\cdot\tens\Gamma_0^\per\left(\vec\tau\right), \qquad\text{where\ \ }\quad \vec \tau = -\tens\sigma_0\cdot\vec E^T = -\tens\sigma_0\cdot(\tens\rho-\tens\rho_0)\cdot\vec j
+\end{equation}
+and $\tens a^*$ is a notation for $\vec a-\langle\vec a\rangle$. This last equation is the current density version of Lippmann-Schwinger equation.
+
+\subsection{Minimisation of the complementary energy}
+It is well-known that solution of problem \eqref{eq1}-\eqref{eq4} is the solution of the minimisation problem:
+\begin{equation}
+\label{eq_EC}
+  \underset{\vec j\in\mathcal S(\overline{\vec J})}{\min}\mathcal{W^{*}}(\vec j)
+\end{equation}
+where
+\begin{equation}
+\mathcal{W^{*}}(\vec j)=\frac 12\int_Z\vec j\cdot\tens\rho\cdot\vec j.
+\end{equation}
+
+We then take the polarization $\vec \tau = \chi \overline{\vec\tau}$ and the correponding current density:
+\begin{equation}
+\vec j=\overline{\vec J}+\vec \tau^*-\tens\sigma_0\cdot\tens\Gamma_0^\per\left(\vec\tau\right)=\overline{\vec J}+\chi^*\overline{\vec\tau}-\tens\sigma_0\cdot\tens\Gamma_0^\per\left(\chi\overline{\vec\tau}\right).
+\end{equation}
+This field is divergence-free, and its average is $\overline{\vec J}$.
+
+We also define
+\begin{equation}
+\begin{aligned}
+\mathcal{E^{*}}\left(\overline{\vec \tau}\right)&=\mathcal{W}^*\left(\overline{\vec J}+\chi^*\overline{\vec\tau}-\tens\sigma_0\cdot\tens\Gamma_0^\per\left(\chi\overline{\vec\tau}\right)\right)\\
+&=\mathcal{W}^*\left(\overline{\vec J}-\tens F\cdot\overline{\vec\tau}\right)\\
+&=\frac12\int_Z\left(\overline{\vec{J}}-\tens F\cdot\overline{\vec{\tau}}\right)\cdot\tens\rho\cdot\left(\overline{\vec{J}}-\tens F\cdot\overline{\vec{\tau}}\right)
+\end{aligned}
+\end{equation}
+where
+\begin{equation}
+\tens F_{ij}(\vec x)=\left(\tens\sigma_0\cdot\tens{\Gamma}_0^{\per}\right)_{i}(\chi\vec e_j)(\vec x)-\delta_{ij}\,\chi^*(\vec x), \qquad\text{(which can be computed from $\tens H_{ij}$ !)}.
+\end{equation} 
+Minimising this function with respect to $\overline{\vec{\tau}}$:
+\begin{equation}
+\frac{\partial \mathcal{E^*}}{\partial \overline{\vec{\tau}}}=-\int_Z{}^t\tens F\cdot\tens\rho\cdot\left(\overline{\vec{J}}-\tens F\cdot\overline{\vec{\tau}}\right)
+\end{equation}
+which is null if
+\begin{equation}
+\int_Z{}^t\tens F\cdot\tens\rho\cdot\overline{\vec{J}}=\int_Z{}^t\tens F\cdot\tens\rho\cdot\tens F\cdot \overline{\vec{\tau}}.
+\end{equation}
+Because $\tens \rho$ is positive definite we can (except if $\tens F$ is null everywhere) obtain a candidate $\overline{\vec{\tau}}$:
+\begin{equation}
+ \overline{\vec{\tau}}=\tens K^{-1}\int_Z{}^t\tens F\cdot\tens\rho\cdot\overline{\vec{J}},
+\end{equation}
+where
+\begin{equation}
+\tens K=\int_Z{}^t\tens F\cdot\tens\rho\cdot\tens F.
+\end{equation}
+Coming back to the energy, we can state that
+\begin{equation}
+\begin{aligned}
+\frac 12\overline{\vec J}\cdot\tens\rho^\app\cdot\overline{\vec J}&\leq\mathcal{E}^*(\overline{\vec{\tau}})\\
+&\leq\frac12\int_Z\overline{\vec{J}}\cdot\tens\rho\cdot\overline{\vec{J}}-\frac 12\overline{\vec \tau}\cdot\tens K\cdot\overline{\vec \tau}\\
+&\leq\frac 12\overline{\vec{J}}\cdot\tens\rho^{Reuss}\cdot\overline{\vec{J}}-\frac 12\overline{\vec \tau}\cdot\tens K\cdot\overline{\vec \tau}\\
+\end{aligned}
+\end{equation}
+which also gives
+\begin{equation}
+\begin{aligned}
+\frac 12\overline{\vec J}\cdot\tens\rho^\app\cdot\overline{\vec J}&\leq\frac 12\overline{\vec{J}}\cdot\tens\rho^{Reuss}\cdot\overline{\vec{J}}-\frac 12\overline{\vec J}\cdot\tens M\cdot\overline{\vec J}\\
+\tens\sigma^\app&\geq\left[\tens\rho^{Reuss}-\tens M\right]^{-1}
+\end{aligned}
+\end{equation}
+where
+\begin{equation}
+\tens M= \int_Z{}^t\tens\rho\cdot\tens F\cdot{}^t\tens K^{-1}\cdot\int_Z{}^t\tens F\cdot\tens\rho
+\end{equation}
+
+
+\section{Convergence of the upper bound}
+We then consider the following electrical field:
+\begin{equation}
+\label{Efield}
+\vec E(\overline{\vec{\tau}}_1,...,\overline{\vec{\tau}}_M)=\overline{\vec{E}}-\tens{\Gamma}_0^\per\left[\chi\overline{\vec{\tau}}_1-\chi\tens\delta\tens\sigma\cdot\tens{\Gamma}_0^\per\left(\chi\overline{\vec{\tau}}_2-\chi\tens\delta\tens\sigma\cdot\tens{\Gamma}_0^\per\left(...\right)\right)\right]=\overline{\vec{E}}-\sum_{k=1}^M\,\tens{\Gamma}_0^\per\left[\left(-\chi\tens\delta\tens\sigma\cdot\tens{\Gamma}_0^\per\right)^{k-1}\left(\chi\overline{\vec{\tau}}_k\right)\right]
+\end{equation}
+where \(\overline{\vec \tau}_k\) are constant vectors, and $\tens\delta\tens\sigma=\tens\sigma_1-\tens\sigma_0$.
+We can write this field as a linear combination of the \(\overline{\vec \tau}_k\) :
+\begin{equation}
+\label{linearc}
+\vec E(\overline{\vec{\tau}}_1,...,\overline{\vec{\tau}}_M)=\overline{\vec{E}}-\sum_{k=1}^M\,\tens H^k\cdot\overline{\vec{\tau}}_k
+\end{equation}
+where
+\beqal
+\tens H^k_{ij}(\vec x)&=\tens{\Gamma}_{i}^{0,\per}\left[\left(-\chi\tens\delta\tens\sigma\cdot\tens{\Gamma}_0^\per\right)^{k-1}(\chi\vec e_j)\right](\vec x)\\
+&=\tens{\Gamma}_{i}^{0,\per}\left[-\chi\tens\delta\tens\sigma\cdot\tens H^{k-1}\right](\vec x)
+\eeqal
+
+We then define
+\begin{equation}
+\begin{aligned}
+\mathcal{E}(\overline{\vec{\tau}}_1,...,\overline{\vec{\tau}}_M)&=\mathcal{W}\left(\vec E(\overline{\vec{\tau}}_1,...,\overline{\vec{\tau}}_M)\right)\\
+&=\frac12\int_Z\left(\overline{\vec{E}}-\sum_{k=1}^M\,\tens H^k\cdot\overline{\vec{\tau}}_k\right)\cdot\tens\sigma\cdot\left(\overline{\vec{E}}-\sum_{k=1}^M\,\tens H^k\cdot\overline{\vec{\tau}}_k\right)
+\end{aligned}
+\end{equation}
+
+and we derive this function with respect to $\overline{\vec{\tau}}_i$:
+\begin{equation}
+\frac{\partial \mathcal{E}}{\partial \overline{\vec{\tau}}_i}=-\int_Z{}^t\tens H^i\cdot\tens\sigma\cdot\left(\overline{\vec{E}}-\sum_{k=1}^M\,\tens H^k\cdot\overline{\vec{\tau}}_k\right)
+\end{equation}
+which is null if
+\begin{equation}
+\label{minimum}
+\int_Z{}^t\tens H^i\cdot\tens\sigma\cdot\overline{\vec{E}}=\sum_{k=1}^{M}\int_Z{}^t\tens H^i\cdot\tens\sigma\cdot\tens H^k\cdot \overline{\vec{\tau}}_k.
+\end{equation}
+This is a linear matrix equation and we can write
+\begin{equation}
+\tens G_{ik}=\int_Z{}^t\tens H^i\cdot\tens\sigma\cdot\tens H^k\qquad\text{and\ \ \ }\tens U_i=\int_Z{}^t\tens H^i\cdot\tens\sigma\cdot\overline{\vec{E}}
+\end{equation}
+
+In fact these expressions can be reduced to integrals over the inclusions only.
+We hence have
+\beqal
+\int_Z{}^t\tens H^i\cdot\tens\sigma_0\cdot\tens H^k&=\int_Z{}^t\tens H^i\cdot\tens\sigma_0\cdot\tens \Gamma_0\left(-\chi\delta\tens\sigma\cdot\tens H^{k-1}\right)\\
+&=\int_Z{}^t\tens H^i\cdot\left[\tens\sigma_0\cdot\tens \Gamma_0\left(-\chi\delta\tens\sigma\cdot\tens H^{k-1}\right)+\chi\delta\tens\sigma\cdot\tens H^{k-1}-\chi\delta\tens\sigma\cdot\tens H^{k-1}\right]\\
+&=-\int_Z\chi{}^t\tens H^i\cdot\delta\tens\sigma\cdot\tens H^{k-1}
+\eeqal
+where we have used the fact that $\tens\sigma_0\cdot\tens \Gamma_0\left(-\chi\delta\tens\sigma\cdot\tens H^{k-1}\right)+\chi\delta\tens\sigma\cdot\tens H^{k-1}$ is a statically admissible field.
+We obtain
+\beqal
+\tens G_{ik}=\int_Z\chi{}^t\tens H^i\cdot\delta\tens\sigma\cdot\left[\tens H^k-\tens H^{k-1}\right]
+\eeqal
+and
+\beqal
+\tens G_{i1}=\int_Z\chi{}^t\tens H^i\cdot\left(\delta\tens\sigma\cdot\tens H^k+\tens 1\right)
+\eeqal
+And we also have
+\beqal
+\tens U_i=\int_Z\chi{}^t\tens H^i\cdot\delta\tens\sigma\cdot\overline{\vec{E}}
+\eeqal
+Coming back to the energy, we can state that
+\begin{equation}
+\begin{aligned}
+\frac 12\overline{\vec E}\cdot\tens\sigma^\app\cdot\overline{\vec E}&\leq\mathcal{E}(\overline{\vec{\tau}}_1,...,\overline{\vec{\tau}}_M)\\
+&\leq\frac12\int_Z\overline{\vec{E}}\cdot\tens\sigma\cdot\overline{\vec{E}}-\frac 12\overline{\vec \tau}_i\cdot\tens G_{ik}\cdot\overline{\vec \tau}_k\\
+&\leq\frac 12\overline{\vec{E}}\cdot\tens\sigma^{Voigt}\cdot\overline{\vec{E}}-\frac 12\overline{\vec \tau}_i\cdot\tens G_{ik}\cdot\overline{\vec \tau}_k=\frac 12\overline{\vec{E}}\cdot\tens\sigma^{Voigt}\cdot\overline{\vec{E}}-\frac 12\overline{\vec \tau}_i\cdot\tens U_i\\
+\end{aligned}
+\end{equation}
+(Einstein's convention on summation of indices)
+which gives
+\begin{equation}
+\tens\sigma^\app \leq \tens\sigma^{Voigt} - \tens N
+\end{equation}
+with
+\begin{equation}
+\tens N= \int_Z{}^t\tens\sigma\cdot\tens H\cdot{}^t\tens G^{-1}\cdot\int_Z{}^t\tens H\cdot\tens\sigma
+\end{equation}
+
+\begin{remark}
+Is there a convergence of the right-hand side member to the apparent conductivity when $M\to\infty$ ? I guess yes, because we know that the field obtained with the "basic scheme" is a special case of the field \eqref{Efield}, with all $\overline{\vec\tau}_k$ equal to the initial polarization of the basic scheme.
+\end{remark}
+
+\subsection{Contrast expansions}
+
+We assume in the following that the two phases are isotropic, so that we can define the contrast $c=\sigma_1/\sigma_0$. In a first time, we want to find an expansion that permits to compute the bounds easily when changing the contrast. To that extent, let us rewrite $\tens H_{ij}^k(\vec x)$ as
+\begin{equation}
+\label{Hijk}
+\tens H^k_{ij}(\vec x)=(c-1)^{k-1}\tens{\Gamma}_{i}^{0,\per}\left[\left(-\chi\sigma_0\tens{\Gamma}_0^\per\right)^{k-1}(\chi\vec e_j)\right](\vec x)
+\end{equation}
+and hence rewrite Eq. \eqref{linearc} as
+\begin{equation}
+\vec E(\overline{\vec{\tau}}_1,...,\overline{\vec{\tau}}_M)=\overline{\vec{E}}-\sum_{k=1}^M\,\tens A^k\cdot\overline{\vec{\pi}}_k
+\end{equation}
+where
+\begin{equation}
+\overline{\vec{\pi}}_k=(c-1)^{k-1}\overline{\vec{\tau}}_k
+\end{equation}
+and
+\begin{equation}
+\tens A^k_{ij}(\vec x)=\tens{\Gamma}_{i}^{0,\per}\left[\left(-\chi\sigma_0\tens{\Gamma}_0^\per\right)^{k-1}(\chi\vec e_j)\right](\vec x)=\tens{\Gamma}_{i}^{0,\per}\left[-\chi\sigma_0\tens A_{\bullet j}^{k-1}\right](\vec x)\qquad (k\geq 2)
+\end{equation}
+and
+\beqal
+\tens A_{ij}^1(\vec x)=\tens{\Gamma}_{i}^{0,\per}(\chi\vec e_j)(\vec x)
+\eeqal
+which is independent of the contrast.
+
+Minimising the energy w. r. t. $\overline{\vec{\pi}}_k$, Eq. \eqref{minimum} must be replaced by
+\begin{equation}
+\int_Z{}^t\tens A^i\cdot\tens\sigma\cdot\overline{\vec{E}}=\sum_{k=1}^{M}\int_Z{}^t\tens A^i\cdot\tens\sigma\cdot\tens A^k\cdot \overline{\vec{\pi}}_k
+\end{equation}
+
+but this equation depends on the contrast. Hence, we rewrite it
+\begin{equation}
+\left[\sigma_0\int_Z(1-\chi)\,{}^t\tens A^i+\sigma_1\int_Z\chi\,{}^t\tens A^i\right]\cdot\overline{\vec{E}}=\left[\sigma_0\sum_{k=1}^{M}\int_Z(1-\chi)\,{}^t\tens A^i\cdot\tens A^k+\sigma_1\sum_{k=1}^{M}\int_Z\chi\,{}^t\tens A^i\cdot\tens A^k\right]\cdot \overline{\vec{\pi}}_k
+\end{equation}
+which can be re-written:
+\beqal
+\left[(\sigma_1-\sigma_0)\int_Z\chi\,{}^t\tens A^i\right]\cdot\overline{\vec{E}}=\left[\sum_{k=1}^{M}\int_Z\chi\,{}^t\tens A^i\cdot\left((\sigma_1-\sigma_0)\tens A^k-\sigma_0\tens A^{k-1}\right)\right]\cdot \overline{\vec{\pi}}_k
+\eeqal
+or also
+\begin{equation}
+\label{sys_cont}
+(c-1)\tens P_i=\sum_{k=1}^M\left((c-1)\tens R_{ik}-\tens S_{ik}\right)\cdot\overline{\vec{\pi}}_k
+\end{equation}
+where
+\begin{equation}
+\label{subblocks}
+\begin{aligned}
+&\tens P_i=\int_Z\chi\,{}^t\tens A^i\cdot\overline{\vec{E}}\\
+&\tens R_{ik}=\int_Z\chi\,{}^t\tens A^i\cdot\tens A^k\qquad\tens S_{ik}=\tens R_{i,(k-1)}.
+\end{aligned}
+\end{equation}
+The upper bound can also be rewritten
+\begin{equation}
+\frac 12\overline{\vec E}\cdot\tens\sigma^\app\cdot\overline{\vec E}\leq\frac 12\overline{\vec{E}}\cdot\tens\sigma^{Voigt}\cdot\overline{\vec{E}}-(c-1)\,\sigma_0\overline{\vec \pi}_{i}\cdot \tens P_i.
+\end{equation}
+
+We could rewrite this inequality as
+\begin{equation}
+\overline{\vec E}\cdot\tens\sigma^\app\cdot\overline{\vec E}\leq(1-f)\,\sigma_0\,\overline{\vec{E}}\cdot\overline{\vec{E}}+c\,f\,\sigma_0\,\overline{\vec{E}}\cdot\overline{\vec{E}}-\sigma_0(c-1)^2\,\,\tens P\cdot\left((c-1)\tens R-\tens S\right)^{-1}\cdot\tens P
+\end{equation}
+where $\tens P,\tens R,\tens S$ do not depend on contrast, and whose expressions are given by the matrix sub-blocks and sub-vectors given by \eqref{subblocks}.
+
+In fact the $\tens P_i,\tens R_{ik},\tens S_{ik}$ can be expressed with the Hill tensors. Indeed, assuming that each $\tens A^k$ is uniform on the inclusion (which is obviously a big approximation),
+\begin{equation}
+\label{subblocks}
+\begin{aligned}
+&\tens P_i=f\,(-\sigma_0)^i\left(\tens {}^t\tens P^0\right)^i\frac{1}{-\sigma_0}\cdot\overline{\vec E}=-\frac{f}{\sigma_0}\,\left(\frac{f-1}{3}\right)^i\overline{\vec E}\\
+&\tens R_{ik}=f\,(-\sigma_0)^{i+k}\left({}^t\tens P^0\right)^i\cdot\left(\tens P^0\right)^k\frac{1}{\sigma_0^2}=\frac{f}{\sigma_0^2}\,\left(\frac{f-1}{3}\right)^{i+k}\tens 1\\
+&\tens S_{ik}=\frac{f}{\sigma_0^2}\,\left(\frac{f-1}{3}\right)^{i+k-1}\tens 1
+\end{aligned}
+\end{equation}
+
+so that
+\begin{equation}
+-\frac{f}{\sigma_0}(c-1)\,\left(\frac{f-1}{3}\right)^i\overline{\vec E}=f\frac{1}{\sigma_0^2}\left(\frac{f-1}{3}\right)^{i+k}\frac{c+2-f(c-1)}{1-f}\overline{\vec{\pi}}_k
+\end{equation}
+which is
+\begin{equation}
+-\delta\sigma\,\overline{\vec E}=\sum_k\left(\frac{f-1}{3}\right)^{k}\frac{c+2-f(c-1)}{1-f}\overline{\vec{\pi}}_k
+\end{equation}
+There is no possibility to invert the system.
+If we had assumed all $\overline{\vec{\pi}}_k$ equals, we would have
+\begin{equation}
+\overline{\vec{\pi}}=\delta\sigma\frac{4-f}{c+2-f(c-1)}\,\overline{\vec E}
+\end{equation}
+and the apparent conductivity is bounded by the equation
+\beqal
+\frac{\sigma^\app}{\sigma_1}\leq\frac{1-f}{c}+f-f\,(1-f)\frac{(c-1)^2}{c}\frac{1}{c+2-f(c-1)}
+\eeqal
+
+
+We can also rewrite the inverse matrix in the right hand-side (assuming its existence):
+\begin{equation}
+\left(\frac 1c\tens R+\tens S\right)^{-1}=\tens S^{-1}\cdot(\frac 1c\tens R\cdot\tens S^{-1}+\tens{Id})^{-1}=\tens S^{-1}\cdot\sum_{p=0}^{\infty}\frac{(-1)^p}{c^p}\left(\tens R\cdot\tens S^{-1}\right)^p
+\end{equation}
+Assuming the convergence of our bounds to the apparent conductivity, this last expression would provide us a series expansion (on the contrast) that would converge to the effective conductivity (when $M\to\infty$, and hence, increasing the size of the matrices and vectors $\tens P, \tens Q,\tens R,\tens S$).
+
+\section{Convergence of the lower bound}
+We have the same result for the lower bound. We consider the following electrical current density field:
+\begin{equation}
+\vec j(\overline{\vec{\tau}}_1,...,\overline{\vec{\tau}}_M)=\overline{\vec{J}}-\sum_{k=1}^M\left[\langle\tens \tau^k\rangle-\tens \tau^k+\tens\sigma_0\cdot\,\tens{\Gamma}_0^\per\left(\tens \tau^k\right)\right]
+\end{equation}
+where
+\begin{equation}
+\tens \tau^k(\vec x)=\left(-\chi\tens\delta\tens\sigma\cdot\tens{\Gamma}_0^\per\right)^{k-1}\left(\chi\overline{\vec{\tau}}_k\right)(\vec x)
+\end{equation}
+and \(\overline{\vec \tau}_k\) are constant vectors, and $\tens\delta\tens\sigma=\tens\sigma_1-\tens\sigma_0$. We can rewrite the current density
+as
+
+\begin{equation}
+\vec j(\overline{\vec{\tau}}_1,...,\overline{\vec{\tau}}_M)=\overline{\vec{J}}-\sum_{k=1}^M\,\tens F^k\cdot\overline{\vec{\tau}}_k
+\end{equation}
+where
+\begin{equation}
+\tens F^k_{ij}(\vec x)=\langle\left[\left(-\chi\tens\delta\tens\sigma\cdot\tens{\Gamma}_0^\per\right)^{k-1}\right]_i(\chi\vec e_j)(\vec x)\rangle-\left[\left(-\chi\tens\delta\tens\sigma\cdot\tens{\Gamma}_0^\per\right)^{k-1}\right]_i(\chi\vec e_j)(\vec x)+\tens\sigma_0\cdot\tens H^k_{ij}(\vec x).
+\end{equation} 
+We then define
+\begin{equation}
+\begin{aligned}
+\mathcal{E^*}(\overline{\vec{\tau}}_1,...,\overline{\vec{\tau}}_M)&=\mathcal{W^*}\left(\vec j(\overline{\vec{\tau}}_1,...,\overline{\vec{\tau}}_M)\right)\\
+&=\frac12\int_Z\left(\overline{\vec{J}}-\sum_{k=1}^M\,\tens F^k\cdot\overline{\vec{\tau}}_k\right)\cdot\tens\rho\cdot\left(\overline{\vec{J}}-\sum_{k=1}^M\,\tens F^k\cdot\overline{\vec{\tau}}_k\right)
+\end{aligned}
+\end{equation}
+
+and we derive this function with respect to $\overline{\vec{\tau}}_i$:
+\begin{equation}
+\frac{\partial \mathcal{E^*}}{\partial \overline{\vec{\tau}}_i}=-\int_Z{}^t\tens F^i\cdot\tens\rho\cdot\left(\overline{\vec{J}}-\sum_{k=1}^M\,\tens F^k\cdot\overline{\vec{\tau}}_k\right)
+\end{equation}
+which is null if
+\begin{equation}
+\int_Z{}^t\tens F^i\cdot\tens\rho\cdot\overline{\vec{J}}=\sum_{k=1}^{M}\int_Z{}^t\tens F^i\cdot\tens\rho\cdot\tens F^k\cdot \overline{\vec{\tau}}_k.
+\end{equation}
+This is a linear matrix equation.
+
+Coming back to the energy, we can state that
+\begin{equation}
+\begin{aligned}
+\frac 12\overline{\vec J}\cdot\tens\rho^\app\cdot\overline{\vec J}&\leq\mathcal{E^*}(\overline{\vec{\tau}}_1,...,\overline{\vec{\tau}}_M)\\
+&\leq\frac12\int_Z\overline{\vec{J}}\cdot\tens\rho\cdot\overline{\vec{J}}-\frac 12\overline{\vec \tau}_i\cdot\tens K_{ik}\cdot\overline{\vec \tau}_k\\
+&\leq\frac 12\overline{\vec{J}}\cdot\tens\rho^{Reuss}\cdot\overline{\vec{J}}-\frac 12\overline{\vec \tau}_i\cdot\tens K_{ik}\cdot\overline{\vec \tau}_k\\
+\end{aligned}
+\end{equation}
+
+which gives
+\begin{equation}
+\tens\sigma^\app \geq \left[\tens\rho^{Reuss} - \tens M\right]^{-1}
+\end{equation}
+with
+\begin{equation}
+\tens M= \int_Z{}^t\tens\rho\cdot\tens F\cdot{}^t\tens K^{-1}\cdot\int_Z{}^t\tens F\cdot\tens\rho
+\end{equation}
+
+\section{Equality of the bounds}
+
+\begin{equation}
+\begin{aligned}
+&\tens\sigma^{Voigt}-\tens N=\left[\tens\rho^{Reuss}-\tens M\right]^{-1}\\
+&\tens\sigma^{Voigt}\cdot\tens\rho^{Reuss}-\tens N\cdot\tens\rho^{Reuss}-\tens\sigma^{Voigt}\cdot\tens M+\tens N\cdot\tens M=\tens I\\
+&(fc+1-f)\left(\tens N+c\tens M\right)-c\tens N\cdot\tens M=(1-c)\,(1-f)(fc+1-f)\tens I\\
+\end{aligned}
+\end{equation}
+
+%\section{Hashin-Shtrikman principle}
+%\section{Choice of the reference medium}
+
+
+
+\label{Sec_conc}
+
+
+\appendix
+
+
+
+\end{document}
+
+% Local Variables:
+% fill-column: 80
+% End:

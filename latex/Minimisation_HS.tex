@@ -1,0 +1,122 @@
+\documentclass[times, final, 3p]{article}
+\newcommand{\mytitle}{}
+\newcommand{\myjournal}{}
+\newcommand{\myauthors}{A. Martin}
+
+\title{\mytitle}
+%\journal{\myjournal}
+
+
+\usepackage[fleqn]{amsmath}
+
+\usepackage{amssymb}
+\usepackage{amsthm}
+\newtheorem{remark}{Remark}
+
+\usepackage{bm}
+\usepackage{tikz}
+
+%\usepackage[breaklinks=true, colorlinks=true, linktocpage=true, pdftitle={\mytitle}, pdfauthor={\myauthors}, pdfsubject={Preprint submitted to \myjournal}, urlcolor=blue]{hyperref}
+
+
+\usepackage{xcolor}
+
+\newcommand{\app}{\text{app}}
+\newcommand{\D}{\mathrm d}
+\newcommand{\dbldot}{\mathbin{\mathord{:}}}
+\let\div\undefined
+\DeclareMathOperator{\div}{div}
+\newcommand{\eff}{\mathrm{eff}}
+\DeclareMathOperator{\grad}{\mathbf{grad}}
+\newcommand{\I}{\mathrm i}
+\newcommand{\integers}{\mathbb Z}
+\newcommand{\jump}[1]{[\![#1]\!]}
+\newcommand{\M}{\mathrm{m}}
+\newcommand{\per}{\mathrm{per}}
+\newcommand{\beqal}{\begin{equation}\begin{aligned}}
+\newcommand{\eeqal}{\end{aligned}\end{equation}}
+\newcommand{\PV}{\operatorname*{PV}}
+\newcommand{\reals}{\mathbb R}
+\DeclareMathOperator{\sym}{\mathbf{sym}}
+\newcommand{\tens}[1]{\vec{#1}}
+\renewcommand{\vec}[1]{\bm{\mathrm{#1}}}
+\newcommand{\rot}[1]{\vec{rot}\ \vec{#1}}
+\newcommand{\taumoy}{\overline{\vec{\tau}}}
+\newcommand{\Eb}{\overline{\vec{E}}}
+
+\bibliographystyle{elsarticle-harv}
+
+\begin{document}
+
+
+\section{Minimisation of Hashin-Shtrikman functional}
+
+We consider
+a periodic cell \(Z\) of a random heterogeneous
+material. The conductivity at \(\vec x\in Z\) is \(\tens\sigma(\vec x)\)
+(symmetric, positive definite, second-order tensor); \(\vec E(\vec x)\),
+\(\phi(\vec x)\) and \(\vec j(\vec x)\) denote the electric field, the electric
+potential and the volumic current, respectively,
+at point \(\vec x\). The apparent conductivity of the cell \(Z\),
+\(\tens\sigma^\app\), is found from the solution to
+the following problem
+\begin{gather}
+  \label{eq:20211209153049}
+  Z:\quad\div{\vec{j}}=0,\\
+  \label{eq:20211209153053}
+  Z:\quad\vec{j}=\tens{\sigma}\cdot\vec{E},\\
+  \label{eq:20211209153103}
+  Z:\quad\vec{E}=\overline{\vec E}+\grad\phi^\per,
+\end{gather}
+where $\phi^\per$ is a $Z$-periodic field, $\vec{j}$ is a $Z$-antiperiodic field, and $\overline{\vec E}$
+is a prescribed constant vector. Eq.~\eqref{eq:20211209153103} ensures that the electric field is curl-free,
+with $\overline{\vec E}=\langle\vec E\rangle$, where angle brackets
+denote volume averages over the cell \(Z\).
+We consider a biphasic cell with a matrix whose conductivity is $\tens \sigma_0$ and another phase whose
+conductivity is $\tens \sigma_1$.
+
+We introduce the linear Green operator \(\tens{\Gamma}_0^\per\),
+associated with the conductivity \(\tens\sigma_0\).
+
+The electrical field solution of problem \eqref{eq:20211209153049}-\eqref{eq:20211209153103} minimizes the Hashin-Shtrikman functional
+\begin{equation}
+\label{HS}
+  \mathcal{H}(\vec \tau)=\frac 12\overline{\vec E}\cdot\tens \sigma_0\cdot\overline{\vec E}-\frac 12\langle\vec \tau\cdot \tens \rho\cdot\vec\tau\rangle-\frac 12 \langle\vec\tau\cdot\tens \Gamma(\vec\tau)\rangle+\overline{\vec E}\cdot\langle\vec\tau\rangle
+\end{equation}
+with $\tens \rho = \tens\delta\tens\sigma^{-1}$.
+
+We then consider the following polarization field:
+\begin{equation}
+\vec \tau=\sum_{k=0}^N\left(-\chi\tens\delta\tens\sigma\tens{\Gamma}_0^\per\right)^k(\chi\overline{\vec{\tau}}_k)\equiv\sum_{k=0}^N\vec{\tau}_k(\vec x)
+\end{equation}
+For $N=0$, we obtain the following polarization field:
+\begin{equation}
+\vec \tau_0=\chi\overline{\vec{\tau}}_0
+\end{equation}
+and for $N=1$, the following one:
+\begin{equation}
+\vec \tau_1=\chi\overline{\vec{\tau}}_0-\chi\tens\delta\tens\sigma\tens{\Gamma}_0^\per(\chi\overline{\vec{\tau}}_1)
+\end{equation}
+
+The different terms of the Hashin-Shtrikman functional hence are:
+\beqal
+-\frac 12\langle\vec \tau\cdot \tens \rho\cdot\vec\tau\rangle=-\frac 12\sum_k\sum_l\overline{\vec{\tau}}_k\cdot\langle{}^t\tens A^k\dbldot\tens\rho\dbldot\tens A^l\rangle\cdot\overline{\vec \tau}_l
+\eeqal
+with
+\beqal
+\left[\tens A^k\right]_{ij} (\vec x)=\left[\left(-\chi\tens\delta\tens\sigma\tens{\Gamma}_0^\per\right)^k\right]_i(\chi\tens e_j)(\vec x)
+\eeqal
+
+
+
+
+
+\appendix
+
+
+
+\end{document}
+
+% Local Variables:
+% fill-column: 80
+% End:
