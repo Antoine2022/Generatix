@@ -1,0 +1,192 @@
+%% Options. 169 is now officially the format
+%% aspectratio=169 : 169 is now officially the format
+%% t : t is needed to get proper display.
+%% 10pt: general font size 
+%% rounded : use rounded box instead of rectangle
+\documentclass[t,10pt,aspectratio=169]{beamer}
+
+
+%% Load theme and commands
+%% Possible options so far are subsidiary=XXX, XXX being either list-sac, list-gre, list-all
+%% The subidiary option allows to inlcude few more logos
+%% \usetheme[subsidiary=list-sac]{CEA23}
+\usetheme{CEA23}
+
+% encoding and language (choose english of french)
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{multimedia}
+\usepackage{csquotes}
+\usepackage[style=authoryear,backend=bibtex]{biblatex}
+
+% packages
+\usepackage[absolute,overlay]{textpos}
+\usepackage{subcaption}
+\usepackage{setspace}
+\usepackage{amsmath,amsthm,mathrsfs}
+\usepackage{amssymb}
+\usepackage{array,multirow,makecell}
+\newcolumntype{L}[1]{>{\arraybackslash }b{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash }b{#1}}
+\newcommand{\dbldot}{\mathbin{\mathord{:}}}
+\renewcommand{\vec}[1]{\boldsymbol{\mathrm{#1}}}
+\newcommand{\mat}[1]{\boldsymbol{\mathrm{#1}}}
+\newcommand{\rot}{\textbf{\textit{\textrm{rot}}}\ }
+\newcommand{\divv}{\textbf{\textit{\textrm{div}}}\ }
+\newcommand{\D}{\mathrm{d}}
+\renewcommand{\div}{\textit{\textrm{div}}\ }
+\newcommand{\grad}{\mathrm{\nabla}}
+\newcommand{\grads}{\mathrm{\nabla}^s}
+\newcommand{\grada}{\mathrm{\nabla}^a}
+\newcommand{\tens}[1]{\vec{#1}}
+\newcommand{\e}[1]{\textit{\textrm{#1}}}
+\newcommand{\ee}[1]{\textrm{#1}}
+\newcommand{\vece}[1]{\textbf{\textit{\textrm{#1}}}}
+\newcommand{\vecee}[1]{\textbf{\textrm{#1}}}
+\newcommand{\eff}{{\textrm{eff}}}
+\newcommand{\per}{{\textrm{per}}}
+\newcommand{\subitem}[1]{\ \ \ \tiny{$\blacksquare$}\small{#1}}
+\newcommand{\Eb}{\overline{\vec{E}}}
+\newcommand{\beq}{\begin{equation}}
+\newcommand{\eeq}{\end{equation}}
+\newcommand{\beqal}{\begin{equation}\begin{aligned}}
+\newcommand{\eeqal}{\end{aligned}\end{equation}}
+\newcommand{\dtepsilon}{\dot{\tens\varepsilon}}
+\newcommand{\dtsigma}{\dot{\tens\sigma}}
+\newcommand{\Dtepsilon}{\Delta\tens\varepsilon}
+\newcommand{\Dtsigma}{\Delta\tens\sigma}
+\newcommand{\tepsilon}{\tens\varepsilon}
+\newcommand{\tsigma}{\tens\sigma}
+
+\bibliography{Prez_SESC}
+
+\begin{document}
+
+% classical beamer stuff
+%% \title{This is our \LaTeX-based presentation title }
+\title{Implementations of homogenized behaviours in structural codes: examples and on-going efforts on extending the \texttt{MFront} code generator}
+\subtitle{~\\European Solid Mechanics Conference 2025}
+\date[07/2025]{July 2025}
+\author{Antoine \textsc{Martin}}
+
+%% logo on title page
+\titlepagelogo{\includegraphics[height=24mm]{graphics/ORIGINAL/LOGO_CEA.png}}
+
+%% the possibilities are the original logo (LOGO_CEA.png) or the derived versions {AIF.png IRAMIS.png IRESNE.png IRFM.png
+%% IRFU.png IRIG.png ISAS.png ISEC.png I-TESE.png JACOB.png JOLIOT.png LETI.png LIST.png LITEN.png}
+
+%% It is also possible to have several logos !!!! Forbidden for public presentation (out of CEA) except for List specific
+%% case seen above
+%% \titlepagelogo{\includegraphics[height=24mm]{graphics/ORIGINAL/JOLIOT.png}\hspace{10pt}\includegraphics[height=24mm]{ATLAS_logo_default_RGBHEX.pdf}}
+
+%% Define a diffusion level, usually empty but can be restreinte, restreintesf, S, TS
+\setvalue{\diffusion}{} % restreinte, restreintesf, S, TS
+
+% specific CEA beamer stuff
+%\seminar[]{}
+
+
+\CEAcenter{CEA CADARACHE}
+\addr{Centre CEA Cadarache 13108 Saint Paul Lez Durance Cedex\\France}
+\CEAemail{\href{mailto:antoine.martin@cea.fr}{\texttt{antoine.martin@cea.fr}}}
+
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+	\begin{frame}
+	  \frametitle{The framework}
+	  \begin{itemize}
+		\item{A maxwellian linear viscoelastic case\\
+		~\\}
+		\item{A matrix-inclusion microstructure\\
+		~\\}
+		\item{We target the computation at the structure scale\\
+		~\\}
+	\end{itemize}
+		
+	
+	 \end{frame}
+	 
+	 \begin{frame}
+	  \frametitle{Preliminaries}
+	  	\beqal
+		&\quad\tens \alpha(\vec x)=\tens \alpha_c(\vec x)+\tens \alpha_s(\vec x)
+		\eeqal
+		with
+		\beqal
+		&\quad\tens \alpha_c(\vec x)=\overline{\tens \alpha}+\Gamma^0\left(\tens L_0\dbldot\tens \alpha\right)(\vec x)\\
+		&\quad\tens \alpha_s(\vec x)=\tens \alpha(\vec x)-\overline{\tens \alpha}-\Gamma^0\left(\tens L_0\dbldot\tens \alpha\right)(\vec x)
+		\eeqal
+	 \end{frame}
+	
+	\begin{frame}
+	  \frametitle{Non-linear visco-elasticity}
+		\beqal
+		t=0 :& \quad\tsigma(\vec x,0)=\tsigma_0(\vec x),\quad \tepsilon(\vec x,0)=\tepsilon_0(\vec x)\\
+		t\geq0 :&\quad \tepsilon(\vec x,t)=\overline{\vec E}(t)+\grad^s\vec \xi^\per(\vec x,t)\\
+		&\quad\dtsigma(\vec x,t)=\tens C(\vec x)\dbldot\left(\dtepsilon(\vec x,t)-f(\tsigma(\vec x,t))\right)\\
+		&\quad\div\tsigma(\vec x,t)=0
+		\eeqal
+		We follow an implicit resolution:
+		\beqal
+		&\quad \Delta\tepsilon(\vec x)=\Delta\overline{\vec E}+\grad^s\Delta\vec \xi^\per(\vec x)\\
+		&\quad\Delta\tsigma(\vec x)=\tens C(\vec x)\dbldot\left(\Delta\tepsilon(\vec x)-\Delta t\,f(\tsigma(\vec x,t)+\theta\Delta\tsigma)\right)\\
+		&\quad\div\Delta\tsigma(\vec x)=0
+		\eeqal
+	 \end{frame}
+	 
+	 
+	 \begin{frame}
+	  \frametitle{The maxwellian visco-elasticity}
+		\beqal
+		&\quad\Delta\tsigma(\vec x)=\tens C(\vec x)\dbldot\left(\Delta\tepsilon(\vec x)-\Delta t\,\tens M(\vec x)\dbldot(\tsigma(\vec x,t)+\theta\Delta\tsigma)\right)\\
+		&\quad\left(\tens I+\theta\Delta t\,\tens C(\vec x)\dbldot\tens M(\vec x)\right)\dbldot\Delta\tsigma(\vec x)=\tens C(\vec x)\dbldot\left(\Delta\tepsilon(\vec x)-\tens \alpha(\vec x)\right)\\
+		\eeqal
+		with:
+		\beqal
+		&\quad\tens \alpha(\vec x)=\Delta t\,\tens M(\vec x)\dbldot\tsigma(\vec x,t)
+		\eeqal
+		which is
+		\beqal
+		&\quad\Delta\tsigma(\vec x)=\tens L(\vec x)\dbldot\left(\Delta\tepsilon(\vec x)-\tens \alpha(\vec x)\right)\\
+		\eeqal
+		with
+		\beqal
+		&\quad \tens L(\vec x)=\left(\tens I+\theta\Delta t\,\tens C(\vec x)\dbldot\tens M(\vec x)\right)^{-1}\dbldot\tens C(\vec x)
+		\eeqal
+	 \end{frame}
+	 
+	 
+	 
+	 \begin{frame}
+	  \frametitle{One phase is visco-elastic, the others are purely elastic}
+		
+	 \end{frame}
+	 
+	 
+	 \begin{frame}
+	  \frametitle{One phase is visco-elastic, the others are purely elastic}
+		
+	 \end{frame}
+	 
+	 
+	 
+	 
+	 
+	 \begin{frame}
+	  \frametitle{Sum up and implementation}
+	  	
+		
+	 \end{frame}
+
+  
+\end{document}
+
+
+
+
+
+
+
+
