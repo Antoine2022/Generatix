@@ -1,7 +1,6 @@
 import numpy as np
-import scipy.special as special
 from random import uniform
-from numba import jit
+from numba import jit, njit, prange
 
 @jit(nopython=True)
 def dist(p1,p2):
@@ -70,8 +69,8 @@ def dist_segment(a1,b1,a2,b2):
 
 
 @jit(nopython=True)
-def test_recouvrement(c1,c2,l,r,R):
-    bool_recouvre=False
+def test_overlap(c1,c2,l,r,R):
+    bool_overlap=False
     j1=-1
     while j1<2:
         j2=-1
@@ -95,7 +94,7 @@ def test_recouvrement(c1,c2,l,r,R):
                                 b2=c20_per+c2[1]*l/2
                                 d=dist_segment(a1,b1,a2,b2)
                                 if d<=2*r:
-                                    bool_recouvre=True
+                                    bool_overlap=True
                                     j1=2
                                     j2=2
                                     j3=2
@@ -111,7 +110,7 @@ def test_recouvrement(c1,c2,l,r,R):
                 j3+=1
             j2+=1
         j1+=1
-    return bool_recouvre
+    return bool_overlap
 
 @jit(nopython=True)
 def is_near(c1,c2,R,l,r):
@@ -148,8 +147,8 @@ def is_near(c1,c2,R,l,r):
     return bool_near
 
 @jit(nopython=True)
-def appendjit_m(micro,cyl,indice):
-    if indice==0:
+def appendjit_m(micro,cyl,index):
+    if index==0:
         n=0
     else:
         n=len(micro)
@@ -159,34 +158,26 @@ def appendjit_m(micro,cyl,indice):
     micro2[n]=cyl
     return micro2
     
-@jit(nopython=True)
-def ajoute(m,c,R,l,r,indice):
+@njit(parallel=True)
+def add(m,c,R,l,r,index):
     length=len(m)
     bool_test=True
     i=0
-    while i<length:
+    for i in prange(length):
         cyl=m[i]
         if is_near(cyl[0],c[0],R,l,r):
-            if test_recouvrement(cyl,c,l,r,R):
+            if test_overlap(cyl,c,l,r,R):
                 bool_test=False
-                i=length
-                #print('recouvre')
-            else:
-                i+=1
-        else:
-            i+=1
-    if test_recouvrement(c,c,l,r,R):
+    if test_overlap(c,c,l,r,R):
         bool_test=False
-        #print('recouvre')
     if bool_test:
-        m=appendjit_m(m,c,indice)
-
+        m=appendjit_m(m,c,index)
     return bool_test,m
                 
         
-#attention R doit être sup à l/2
+#warning R must be >= l/2 (R is one-half of the cell, and l is the total spheroid length). There is no exclusion distance in this implementation. There is no overlap between spheroids
 @jit(nopython=True)
-def genere_micro(R,l,r,f):
+def generate_micro(R,l,r,f):
     Vol=np.pi*r**2*l
     Voltot=8*R**3
     N=int(f*Voltot/Vol)
@@ -200,22 +191,53 @@ def genere_micro(R,l,r,f):
         normal=np.array([np.sin(theta)*np.cos(phi),np.sin(theta)*np.sin(phi),np.cos(theta)])
         angle=np.array([theta*180/np.pi,phi*180/np.pi,0])
         c=np.array([[center[0],center[1],center[2]],[normal[0],normal[1],normal[2]],[angle[0],angle[1],angle[2]]])
-        bool1,m=ajoute(m,c,R,l,r,i)
+        bool1,m=add(m,c,R,l,r,i)
+        if bool1:
+            i+=1
+            print("put inclusion ", i)
+    return m
+
+#warning R must be >= l/2 (R is one-half of the cell, and l is the total spheroid length). There is no overlap between spheroids.
+# There is no exclusion distance in this implementation (which may cause overlapping after voxelize process).
+@jit(nopython=True)
+def generate_micro_aligned(R,l,r,f):
+    Vol=np.pi*r**2*l
+    Voltot=8*R**3
+    N=int(f*Voltot/Vol)
+    print(N)
+    m=np.zeros((1,3,3))
+    i=0
+    while i<N:
+        center=np.array([uniform(-R,R),uniform(-R,R),uniform(-R,R)])
+        theta=np.arccos(1-2*uniform(0,1))
+        theta=np.pi/2
+        phi=0.
+        normal=np.array([np.sin(theta)*np.cos(phi),np.sin(theta)*np.sin(phi),np.cos(theta)])
+        angle=np.array([theta*180/np.pi,phi*180/np.pi,0])
+        c=np.array([[center[0],center[1],center[2]],[normal[0],normal[1],normal[2]],[angle[0],angle[1],angle[2]]])
+        bool1,m=add(m,c,R,l,r,i)
         if bool1:
             i+=1
             print(i)
-    normals=m[:,1,:]
-    nn1=0.
-    nn2=0.
-    nn3=0.
-    n_n=np.zeros((3,3))
-    for i in range(len(normals)):
-        n_n+=np.outer(normals[i],normals[i])/len(normals)
-        nn1+=normals[i,0]/len(normals)
-        nn2+=normals[i,1]/len(normals)
-        nn3+=normals[i,2]/len(normals)
-    print(n_n)
-    
     return m
+    
+l=0.5 #semi_length
+e=10 #aspect ratio
+D=1 #side of the box
+f=0.12 # target fraction (will be smaller after voxellization)
 
+micro=generate_micro(D/2,l,l/e/2,f)
+micro_name="micro_randomly_oriented"
+np.save("./"+micro_name+".npy",micro)
 
+from voxelize import *
+size=128
+micro_v=voxelize_ell_n(micro,size,l,e,D)
+write_vtk(micro_v,micro_name,size)
+
+f=0.1 # target fraction (will be smaller after voxellization)
+micro=generate_micro_aligned(D/2,l,l/e/2,f)
+micro_name="micro_aligned"
+np.save("./"+micro_name+".npy",micro)
+micro_v=voxelize_ell(micro,size,l,e,D)
+write_vtk(micro_v,micro_name,size)
