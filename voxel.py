@@ -138,7 +138,7 @@ def read_vtk(file_name, field_name):
     data = reader.GetOutput()
     dim = data.GetDimensions()
     vec = [i - 1 for i in dim]
-    e0 = vnp.vtk_to_numpy(data.GetCellData().GetArray(champ_name))
+    e0 = vnp.vtk_to_numpy(data.GetCellData().GetArray(field_name))
     return e0.reshape(vec, order="F")
 
 #just for writing a .vtk file
