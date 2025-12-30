@@ -10,8 +10,10 @@ examples.py : demos
 
 ## Examples
 
-With spherocylinders.py, the following microstructures were generated (the visualization was obtained with a construction via Comsol Multiphysics^[COMSOL Multiphysics® v. 5.6. www.comsol.com. COMSOL AB, Stockholm, Sweden]):
+With spherocylinders.py, the following microstructures were generated (the visualization was obtained with a construction via Comsol Multiphysics[^1]):
 
-'cellule_dense.png'
-'cellule_orient.png'
-'sphere_dense.jpg'
+![](cellule_dense.png)
+![](cellule_orient.png)
+![](sphere_dense.jpg)
+
+[^1]: COMSOL Multiphysics® v. 5.6. www.comsol.com. COMSOL AB, Stockholm, Sweden
