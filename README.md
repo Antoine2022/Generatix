@@ -12,9 +12,9 @@ examples.py : demos
 
 With spherocylinders.py, the following microstructures were generated (the visualization was obtained with a construction via Comsol Multiphysics[^1]):
 
-![Conditions périodiques, hard cylinders](cellule_dense.png)
+![Conditions périodiques, hard cylinders](cellule_dense.PNG)
 
-![Conditions périodiques, hard cylinders, orientation unique](cellule_orient.png)
+![Conditions périodiques, hard cylinders, orientation unique](cellule_orient.PNG)
 
 ![Hard cylinders dans une sphère](sphere_dense.jpg)
 
