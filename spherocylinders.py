@@ -1,7 +1,6 @@
 import numpy as np
 from random import uniform
-from numba import jit, njit, prange
-
+from numba import jit
 @jit(nopython=True)
 def dist(p1,p2):
     return np.linalg.norm(p1-p2)
@@ -158,16 +157,21 @@ def appendjit_m(micro,cyl,index):
     micro2[n]=cyl
     return micro2
     
-@njit(parallel=True)
+@jit(nopython=True)
 def add(m,c,R,l,r,index):
     length=len(m)
     bool_test=True
     i=0
-    for i in prange(length):
+    while i < length:
         cyl=m[i]
         if is_near(cyl[0],c[0],R,l,r):
             if test_overlap(cyl,c,l,r,R):
                 bool_test=False
+                i=length
+            else:
+                i+=1
+        else:
+            i+=1
     if test_overlap(c,c,l,r,R):
         bool_test=False
     if bool_test:

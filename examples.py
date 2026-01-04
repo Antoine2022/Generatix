@@ -12,7 +12,7 @@ np.save("./"+micro_name+".npy",micro)
 
 from voxel import *
 size=128
-micro_v=voxelize_ell_n(micro,size,l,e,D)
+micro_v=voxelize_ell(micro,size,l,e,D)
 write_vtk(micro_v,micro_name,size)
 
 f=0.1 # target fraction (will be smaller after voxellization)
