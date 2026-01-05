@@ -14,17 +14,17 @@ With spherocylinders.py, the following microstructures were generated (the visua
  
 <p align="center">
   <img src="images/cellule_dense.PNG" width="60%" /><br>
-  <em>Conditions périodiques, hard cylinders</em>
+  <em>Periodic boundary conditions, hard cylinders</em>
 </p>
 
 <p align="center">
   <img src="images/cellule_orient.PNG" width="60%" /><br>
-  <em>Conditions périodiques, hard cylinders, orientation unique</em>
+  <em>Periodic boundary conditions, hard cylinders, unique orientation</em>
 </p>
 
 <p align="center">
   <img src="images/sphere_dense.jpg" width="60%" /><br>
-  <em>Hard cylinders dans une sphère</em>
+  <em>Hard cylinders in a spherical volume</em>
 </p>
 
 
