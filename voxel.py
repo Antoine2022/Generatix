@@ -9,7 +9,7 @@ from vtk.util import numpy_support as vnp
 def inside_ell(pc,pi_,n,l,e):
     u=pi_-pc
     x=np.dot(u,n)
-    if x<l/2:
+    if abs(x)<l/2:
         u_n=u-x*n
         a=l/2
         b=l/2/e
@@ -27,7 +27,7 @@ def inside_ell(pc,pi_,n,l,e):
 def inside_cyl(pc,pi_,n,l,e):
     u=pi_-pc
     x=np.dot(u,n)
-    if x<l/2:
+    if abs(x)<l/2:
         u_n=u-x*n
         y=np.linalg.norm(u_n)
         if y<=l/e/2:

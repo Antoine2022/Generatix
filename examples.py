@@ -1,7 +1,7 @@
 import numpy as np
 from spherocylinders import *
     
-l=0.5 #length of spherocylinder
+l=0.5 #length of cylinder
 e=10 #aspect ratio
 D=1 #side of the box
 f=0.12 # target fraction (will be smaller after voxellization)
