@@ -36,6 +36,38 @@ def inside_cyl(pc,pi_,n,l,e):
             return False
     else:
         return False
+    
+# This function just takes the center pc of the spherocylinder and a 
+# point pi_, and checks if pi_ is inside a spherocylinder with normal n, length l and aspect ratio e. 
+@jit(nopython=True)
+def inside_spherocyl(pc,pi_,n,l,e):
+    r=l/e/2
+    u=pi_-pc
+    x=np.dot(u,n)
+    if abs(x)<l/2+r:
+        if abs(x)<l/2:
+            u_n=u-x*n
+            y=np.linalg.norm(u_n)
+            if y<=r:
+                return True
+            else:
+                return False
+        elif x>=l/2:
+            pe=pc+l/2*n
+            if np.linalg.norm(pi_-pe)<=r:
+                return True
+            else:
+                return False
+        elif x<=-l/2:
+            pe=pc-l/2*n
+            if np.linalg.norm(pi_-pe)<=r:
+                return True
+            else:
+                return False
+        else:
+            return False
+    else:
+        return False
 
 
 # This function just takes the center pc of the inclusion and a 
@@ -61,6 +93,14 @@ def inside(pc,pi,n,l,e,D,inclusion_type):
                         j3+=1
                 if inclusion_type=="cylinder":
                     if inside_cyl(pc,pi_,n,l,e):
+                        value=True
+                        j1=2
+                        j2=2
+                        j3=2
+                    else:
+                        j3+=1 
+                if inclusion_type=="spherocylinder":
+                    if inside_spherocyl(pc,pi_,n,l,e):
                         value=True
                         j1=2
                         j2=2

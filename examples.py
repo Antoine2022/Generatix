@@ -13,7 +13,9 @@ np.save("./"+micro_name+".npy",micro)
 from voxel import *
 size=128
 micro_v=voxelize(micro,size,l,e,D,"cylinder")
-write_vtk(micro_v,micro_name,size)
+write_vtk(micro_v,micro_name+"_cylinders",size)
+micro_v=voxelize(micro,size,l,e,D,"spherocylinder")
+write_vtk(micro_v,micro_name+"_spherocylinders",size)
 
 f=0.1 # target fraction (will be smaller after voxellization)
 micro=generate_micro_aligned(D/2,l,l/e/2,f)
