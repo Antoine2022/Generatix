@@ -1,6 +1,7 @@
 import numpy as np
 from random import uniform
 from numba import jit
+
 @jit(nopython=True)
 def dist(p1,p2):
     return np.linalg.norm(p1-p2)

@@ -4,9 +4,44 @@ from vtk import vtkStructuredPointsReader
 from vtk.util import numpy_support as vnp
 
 # This function just takes the center pc of the spheroid and a 
-# point pi, and checks if pi is inside a spheroid with normal n, length l and aspect ratio e. 
+# point pi_, and checks if pi_ is inside a spheroid with normal n, length l and aspect ratio e. 
 @jit(nopython=True)
-def inside(pc,pi,n,l,e,D):
+def inside_ell(pc,pi_,n,l,e):
+    u=pi_-pc
+    x=np.dot(u,n)
+    if x<l/2:
+        u_n=u-x*n
+        a=l/2
+        b=l/2/e
+        y=np.linalg.norm(u_n)
+        if (x/a)**2+(y/b)**2<=1:
+            return True
+        else:
+            return False
+    else:
+        return False
+    
+# This function just takes the center pc of the cylinder and a 
+# point pi_, and checks if pi_ is inside a cylinder with normal n, length l and aspect ratio e. 
+@jit(nopython=True)
+def inside_cyl(pc,pi_,n,l,e):
+    u=pi_-pc
+    x=np.dot(u,n)
+    if x<l/2:
+        u_n=u-x*n
+        y=np.linalg.norm(u_n)
+        if y<=l/e/2:
+            return True
+        else:
+            return False
+    else:
+        return False
+
+
+# This function just takes the center pc of the inclusion and a 
+# point pi, and checks if pi or its periodic images are inside the inclusion with normal n, length l and aspect ratio e. 
+@jit(nopython=True)
+def inside(pc,pi,n,l,e,D,inclusion_type):
     value=False
     j1=-1
     while j1<2:
@@ -16,31 +51,32 @@ def inside(pc,pi,n,l,e,D):
             while j3<2:
                 vec=np.array([j1*D,j2*D,j3*D])
                 pi_=pi+vec
-                u=pi_-pc
-                x=np.dot(u,n)
-                if x<l/2:
-                    u_n=u-x*n
-                    a=l/2
-                    b=l/2/e
-                    y=np.linalg.norm(u_n)
-                    if (x/a)**2+(y/b)**2<=1:
+                if inclusion_type=="spheroid":
+                    if inside_ell(pc,pi_,n,l,e):
                         value=True
                         j1=2
                         j2=2
                         j3=2
                     else:
                         j3+=1
-                else:
-                    j3+=1
+                if inclusion_type=="cylinder":
+                    if inside_cyl(pc,pi_,n,l,e):
+                        value=True
+                        j1=2
+                        j2=2
+                        j3=2
+                    else:
+                        j3+=1 
             j2+=1
         j1+=1
     return value
-    
+
+
 # This function defines (im,jm,km) (maybe outside the cell) and
-# (iM,jM,kM) (maybe outside also) that defines like a parallelepipedic box outside of which there cannot be any voxel of the spheroid. It permits to fasten the voxellization.
-# Then, it uses the function "inside" as follows: a voxel is inside the spheroid if the point situated at the smallest x,y,z of the voxel is inside the spheroid.
+# (iM,jM,kM) (maybe outside also) that defines like a parallelepipedic box outside of which there cannot be any voxel of the inclusion. It permits to fasten the voxellization.
+# Then, it uses the function "inside" as follows: a voxel is inside the inclusion if the point situated at the smallest x,y,z of the voxel is inside the inclusion.
 @jit(nopython=True)
-def fill(micro_v,c,n,l,e,i,D):
+def fill(micro_v,c,n,l,e,i,D,inclusion_type):
     N0,N1,N2=micro_v.shape
     xc,yc,zc=c
     xc=xc+D/2
@@ -77,26 +113,27 @@ def fill(micro_v,c,n,l,e,i,D):
                 zi=kk/N2
                 pi=np.array([xi,yi,zi])
                 pc=np.array([xc,yc,zc])
-                value=inside(pc,pi,n,l,e,D)
+                value=inside(pc,pi,n,l,e,D,inclusion_type)
                 if value:
                     micro_v[ii,jj,kk]=i
 
-#This function gives number 0 for matrix and 1 for all spheroids
-def voxelize_ell(micro,N0,l,e,D):
+#This function gives number 0 for matrix and 1 for all inclusions
+def voxelize(micro,N0,l,e,D,inclusion_type):
     micro_v=np.zeros((N0,N0,N0))
     for i in range(len(micro)):
         print(i)
         c,n,ang=micro[i]
-        fill(micro_v,c,n,l,e,1,D)
+        fill(micro_v,c,n,l,e,1,D,inclusion_type)
     return micro_v
 
-#This function allows to give a number to each spheroid
-def voxelize_ell_n(micro,N0,l,e,D):
+
+#This function allows to give a number to each inclusion
+def voxelize_n(micro,N0,l,e,D,inclusion_type):
     micro_v=np.zeros((N0,N0,N0))
     for i in range(len(micro)):
         print(i)
         c,n,ang=micro[i]
-        fill(micro_v,c,n,l,e,i+1,D)
+        fill(micro_v,c,n,l,e,i+1,D,inclusion_type)
     return micro_v
 
 #just for using prange (parallel loop)
