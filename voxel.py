@@ -158,22 +158,24 @@ def fill(micro_v,c,n,l,e,i,D,inclusion_type):
                     micro_v[ii,jj,kk]=i
 
 #This function gives number 0 for matrix and 1 for all inclusions
-def voxelize(micro,N0,l,e,D,inclusion_type):
+def voxelize(micro,N0,D,inclusion_type):
     micro_v=np.zeros((N0,N0,N0))
     for i in range(len(micro)):
         print(i)
-        c,n,ang=micro[i]
-        fill(micro_v,c,n,l,e,1,D,inclusion_type)
+        c,n,ang,sh=micro[i]
+        l,r,_=sh
+        fill(micro_v,c,n,l,l/2/r,1,D,inclusion_type)
     return micro_v
 
 
 #This function allows to give a number to each inclusion
-def voxelize_n(micro,N0,l,e,D,inclusion_type):
+def voxelize_n(micro,N0,D,inclusion_type):
     micro_v=np.zeros((N0,N0,N0))
     for i in range(len(micro)):
         print(i)
-        c,n,ang=micro[i]
-        fill(micro_v,c,n,l,e,i+1,D,inclusion_type)
+        c,n,ang,sh=micro[i]
+        l,r,_=sh
+        fill(micro_v,c,n,l,l/2/r,i+1,D,inclusion_type)
     return micro_v
 
 #just for using prange (parallel loop)

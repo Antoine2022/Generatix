@@ -67,9 +67,14 @@ def dist_segment(a1,b1,a2,b2):
             return dist(p1,p2)
 
 
-
 @jit(nopython=True)
-def test_overlap(c1,c2,l,r,R):
+def test_overlap(c1,c2,R):
+    c10=c1[0]
+    c20=c2[0]
+    l1=c1[3,0]
+    r1=c1[3,1]
+    l2=c2[3,0]
+    r2=c2[3,1]
     bool_overlap=False
     j1=-1
     while j1<2:
@@ -85,15 +90,15 @@ def test_overlap(c1,c2,l,r,R):
                         while k3<2:
                             if not((c1==c2).all()) or j1!=k1 or j2!=k2 or j3!=k3:
                                 vect1=np.array([j1*2*R,j2*2*R,j3*2*R])
-                                c10_per=c1[0]+vect1
+                                c10_per=c10+vect1
                                 vect2=np.array([k1*2*R,k2*2*R,k3*2*R])
-                                c20_per=c2[0]+vect2
-                                a1=c10_per-c1[1]*l/2
-                                b1=c10_per+c1[1]*l/2
-                                a2=c20_per-c2[1]*l/2
-                                b2=c20_per+c2[1]*l/2
+                                c20_per=c20+vect2
+                                a1=c10_per-c1[1]*l1/2
+                                b1=c10_per+c1[1]*l1/2
+                                a2=c20_per-c2[1]*l2/2
+                                b2=c20_per+c2[1]*l2/2
                                 d=dist_segment(a1,b1,a2,b2)
-                                if d<=2*r:
+                                if d<=r1+r2:
                                     bool_overlap=True
                                     j1=2
                                     j2=2
@@ -112,8 +117,15 @@ def test_overlap(c1,c2,l,r,R):
         j1+=1
     return bool_overlap
 
+
 @jit(nopython=True)
-def is_near(c1,c2,R,l,r):
+def is_near(c1,c2,R):
+    c10=c1[0]
+    c20=c2[0]
+    l1=c1[3,0]
+    r1=c1[3,1]
+    l2=c2[3,0]
+    r2=c2[3,1]
     bool_near=False    
     j1=-1
     while j1<2:
@@ -129,7 +141,7 @@ def is_near(c1,c2,R,l,r):
                         while k3<2:
                             vect1=np.array([j1*2*R,j2*2*R,j3*2*R])
                             vect2=np.array([k1*2*R,k2*2*R,k3*2*R])
-                            if dist(c1+vect1,c2+vect2)<=l+2*r:
+                            if dist(c10+vect1,c20+vect2)<=(l1+l2)/2+r1+r2:
                                 bool_near=True
                                 j1=2
                                 j2=2
@@ -146,82 +158,73 @@ def is_near(c1,c2,R,l,r):
         j1+=1
     return bool_near
 
+
 @jit(nopython=True)
-def appendjit_m(micro,cyl,index):
+def appendjit(micro,cyl,index):
     if index==0:
         n=0
     else:
         n=len(micro)
-    micro2=np.zeros((n+1,3,3))
+    micro2=np.zeros((n+1,4,3))
     for i in range(n):
         micro2[i]=micro[i]
     micro2[n]=cyl
     return micro2
     
+
 @jit(nopython=True)
-def add(m,c,R,l,r,index):
+def add(m,c,R,index):
     length=len(m)
     bool_test=True
     i=0
     while i < length:
         cyl=m[i]
-        if is_near(cyl[0],c[0],R,l,r):
-            if test_overlap(cyl,c,l,r,R):
+        if is_near(cyl,c,R):
+            if test_overlap(cyl,c,R):
                 bool_test=False
                 i=length
             else:
                 i+=1
         else:
             i+=1
-    if test_overlap(c,c,l,r,R):
+    if test_overlap(c,c,R):
         bool_test=False
     if bool_test:
-        m=appendjit_m(m,c,index)
+        m=appendjit(m,c,index)
     return bool_test,m
                 
-        
-#warning R must be >= l/2 (R is one-half of the cell, and l is the total spheroid length). There is no exclusion distance in this implementation. There is no overlap between spheroids
-@jit(nopython=True)
-def generate_micro(R,l,r,f):
-    Vol=np.pi*r**2*l
-    Voltot=8*R**3
-    N=int(f*Voltot/Vol)
-    print(N)
-    m=np.zeros((1,3,3))
-    i=0
-    while i<N:
-        center=np.array([uniform(-R,R),uniform(-R,R),uniform(-R,R)])
-        theta=np.arccos(1-2*uniform(0,1))
-        phi=uniform(0,2*np.pi)
-        normal=np.array([np.sin(theta)*np.cos(phi),np.sin(theta)*np.sin(phi),np.cos(theta)])
-        angle=np.array([theta*180/np.pi,phi*180/np.pi,0])
-        c=np.array([[center[0],center[1],center[2]],[normal[0],normal[1],normal[2]],[angle[0],angle[1],angle[2]]])
-        bool1,m=add(m,c,R,l,r,i)
-        if bool1:
-            i+=1
-            print("put inclusion ", i)
-    return m
 
-#warning R must be >= l/2 (R is one-half of the cell, and l is the total spheroid length). There is no overlap between spheroids.
-# There is no exclusion distance in this implementation (which may cause overlapping after voxelize process).
+#warning R must be >= max(l)/2 (R is one-half of the cell, and l is the total spheroid length). There is no exclusion distance in this implementation. There is no overlap between spheroids
 @jit(nopython=True)
-def generate_micro_aligned(R,l,r,f):
-    Vol=np.pi*r**2*l
+def generate_micro(R,lrf_list,distribution_type):
     Voltot=8*R**3
-    N=int(f*Voltot/Vol)
-    print(N)
-    m=np.zeros((1,3,3))
-    i=0
-    while i<N:
-        center=np.array([uniform(-R,R),uniform(-R,R),uniform(-R,R)])
-        theta=np.arccos(1-2*uniform(0,1))
-        theta=np.pi/2
-        phi=0.
-        normal=np.array([np.sin(theta)*np.cos(phi),np.sin(theta)*np.sin(phi),np.cos(theta)])
-        angle=np.array([theta*180/np.pi,phi*180/np.pi,0])
-        c=np.array([[center[0],center[1],center[2]],[normal[0],normal[1],normal[2]],[angle[0],angle[1],angle[2]]])
-        bool1,m=add(m,c,R,l,r,i)
-        if bool1:
-            i+=1
-            print(i)
+    N_list=[]
+    for el in lrf_list:
+        l,r,f=el
+        Vol=np.pi*r**2*l
+        N_list.append(int(f*Voltot/Vol))
+    m=np.zeros((1,4,3))
+    p=len(N_list)
+    print(N_list)
+    ind=0
+    for ip in range(p):
+        l,r,f=lrf_list[ip]
+        N=N_list[ip]
+        i=0
+        while i<N:
+            center=np.array([uniform(-R,R),uniform(-R,R),uniform(-R,R)])
+            if distribution_type=="random":
+                theta=np.arccos(1-2*uniform(0,1))
+                phi=uniform(0,2*np.pi)
+            if distribution_type=="aligned":
+                theta=np.pi/2
+                phi=0.
+            normal=np.array([np.sin(theta)*np.cos(phi),np.sin(theta)*np.sin(phi),np.cos(theta)])
+            angle=np.array([theta*180/np.pi,phi*180/np.pi,0])
+            c=np.array([[center[0],center[1],center[2]],[normal[0],normal[1],normal[2]],[angle[0],angle[1],angle[2]],[l,r,0]])
+            bool1,m=add(m,c,R,ind)
+            if bool1:
+                i+=1
+                ind+=1
+                print("put inclusion type ", ip,", number ",i)
     return m
