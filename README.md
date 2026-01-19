@@ -40,12 +40,12 @@ of orientations, between two limit angles.
 
 <p align="center">
   <figure style="display:inline-block; width:45%; text-align:center;">
-    <img src="images/polydisperse_cyl.png" width="100%">
+    <img src="images/polydisperse_cyl.png" width="30%">
     <figcaption><em>Polydisperse hard cylinders, random orientation</em></figcaption>
   </figure>
 
   <figure style="display:inline-block; width:45%; text-align:center;">
-    <img src="images/polydisperse_orient.png" width="100%">
+    <img src="images/polydisperse_orient.png" width="30%">
     <figcaption><em>Polydisperse hard cylinders, particular distribution of orientations</em></figcaption>
   </figure>
 </p>
