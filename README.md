@@ -20,17 +20,17 @@ There is no overlap.
  
 <p align="center">
   <img src="images/spherocylinders.png" width="60%" /><br>
-  <em>Periodic boundary conditions, hard cylinders</em>
+  <em>Spherocylinders</em>
 </p>
 
 <p align="center">
   <img src="images/cylinders.png" width="60%" /><br>
-  <em>Periodic boundary conditions, hard cylinders, unique orientation</em>
+  <em>Cylinders</em>
 </p>
 
 <p align="center">
   <img src="images/spheroids.png" width="60%" /><br>
-  <em>Hard cylinders in a spherical volume</em>
+  <em>Spheroids</em>
 </p>
 
 The tools allow to generate polydisperse microstructures, which means that the user must provide a numpy array
@@ -39,11 +39,8 @@ uniform distribution of orientations ("random"), and another example is generate
 of orientations, between two limit angles.
 
 <p align="center">
-  <img src="images/polydisperse_cyl.png" width="60%" /><br>
-  <em>Periodic boundary conditions, polydisperse hard cylinders, random orientation</em>
-</p>
-
-<p align="center">
-  <img src="images/polydisperse_orient.png" width="60%" /><br>
-  <em>Periodic boundary conditions, polydisperse hard cylinders, particular distribution of orientations</em>
+  <img src="images/polydisperse_cyl.png" width="40%" /><br>
+  <em>Polydisperse hard cylinders, random orientation</em>
+ <img src="images/polydisperse_orient.png" width="40%" /><br>
+  <em>Polydisperse hard cylinders, particular distribution of orientations</em>
 </p>
