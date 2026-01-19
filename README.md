@@ -22,15 +22,15 @@ There is no overlap.
 <table align="center">
   <tr>
     <td align="center">
-      <img src="images/spherocylinders.png" width="200"><br>
+      <img src="images/spherocylinders.png" width="220"><br>
       <em>Spherocylinders</em>
     </td>
     <td align="center">
-      <img src="images/cylinders.png" width="200"><br>
+      <img src="images/cylinders.png" width="220"><br>
       <em>Cylinders</em>
     </td>
     <td align="center">
-      <img src="images/spheroids.png" width="200"><br>
+      <img src="images/spheroids.png" width="220"><br>
       <em>Spheroids</em>
     </td>
   </tr>
@@ -48,8 +48,8 @@ of orientations, between two limit angles.
       <em>Polydisperse hard cylinders, random orientation</em>
     </td>
     <td align="center">
-      <img src="images/polydisperse_orient.png" width="250"><br>
-      <em>Polydisperse hard cylinders, particular distribution of orientations</em>
+      <img src="images/polydisperse_orient.png" width="350"><br>
+      <em>Polydisperse hard cylinders, particular distribution</em>
     </td>
   </tr>
 </table>
