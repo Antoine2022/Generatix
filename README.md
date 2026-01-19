@@ -22,15 +22,15 @@ There is no overlap.
 <table align="center">
   <tr>
     <td align="center">
-      <img src="images/spherocylinders.png" width="220"><br>
+      <img src="images/spherocylinders.png" width="250"><br>
       <em>Spherocylinders</em>
     </td>
     <td align="center">
-      <img src="images/cylinders.png" width="220"><br>
+      <img src="images/cylinders.png" width="250"><br>
       <em>Cylinders</em>
     </td>
     <td align="center">
-      <img src="images/spheroids.png" width="220"><br>
+      <img src="images/spheroids.png" width="250"><br>
       <em>Spheroids</em>
     </td>
   </tr>
