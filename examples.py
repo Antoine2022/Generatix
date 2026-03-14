@@ -17,14 +17,14 @@ from voxel import *
 size=128
 micro_v=voxelize(micro_poly,size,D,"cylinder")
 micro_name="micro_poly_randomly_oriented"
-write_vtk(micro_v,micro_name+"_cylinders",size)
+write_vtk(micro_v,D,micro_name+"_cylinders",size)
 micro_v=voxelize(micro,size,D,"spherocylinder")
 micro_name="micro_randomly_oriented"
-write_vtk(micro_v,micro_name+"_spherocylinders",size)
+write_vtk(micro_v,D,micro_name+"_spherocylinders",size)
 
 f=0.1 # target fraction (will be smaller after voxellization)
 micro=generate_micro(D/2,np.array([[l,l/e/2,f]]),"aligned")
 micro_name="micro_aligned"
 np.save("./"+micro_name+".npy",micro)
 micro_v=voxelize(micro,size,D,"spheroid")
-write_vtk(micro_v,micro_name+"_spheroids",size)
+write_vtk(micro_v,D,micro_name+"_spheroids",size)
