@@ -127,18 +127,18 @@ def fill(micro_v,c,n,l,e,i,D,inclusion_type):
     x1,y1,z1=p1
     x2,y2,z2=p2
     r=l/e/2
-    i1=int(x1*N0)
-    j1=int(y1*N1)
-    k1=int(z1*N2)
-    i2=int(x2*N0)
-    j2=int(y2*N1)
-    k2=int(z2*N2)
-    im=min(i1,i2)-int(r*N0)-1
-    iM=max(i1,i2)+int(r*N0)+1
-    jm=min(j1,j2)-int(r*N1)-1
-    jM=max(j1,j2)+int(r*N1)+1
-    km=min(k1,k2)-int(r*N2)-1
-    kM=max(k1,k2)+int(r*N2)+1
+    i1=int(x1/D*N0)
+    j1=int(y1/D*N1)
+    k1=int(z1/D*N2)
+    i2=int(x2/D*N0)
+    j2=int(y2/D*N1)
+    k2=int(z2/D*N2)
+    im=min(i1,i2)-int(r/D*N0)-1
+    iM=max(i1,i2)+int(r/D*N0)+1
+    jm=min(j1,j2)-int(r/D*N1)-1
+    jM=max(j1,j2)+int(r/D*N1)+1
+    km=min(k1,k2)-int(r/D*N2)-1
+    kM=max(k1,k2)+int(r/D*N2)+1
     for ii in range(im,iM):
         for jj in range(jm,jM):
             for kk in range(km,kM):
@@ -148,9 +148,9 @@ def fill(micro_v,c,n,l,e,i,D,inclusion_type):
                     jj-=N1
                 if kk>=N2:
                     kk-=N2
-                xi=ii/N0
-                yi=jj/N1
-                zi=kk/N2
+                xi=ii/N0*D
+                yi=jj/N1*D
+                zi=kk/N2*D
                 pi=np.array([xi,yi,zi])
                 pc=np.array([xc,yc,zc])
                 value=inside(pc,pi,n,l,e,D,inclusion_type)
@@ -222,14 +222,13 @@ def read_vtk(file_name, field_name):
 
 #just for writing a .vtk file
 def write_vtk(mic,D,name,N):
-    x=1/D
     VTK_HEADER = f"""# vtk DataFile Version 4.5
 Materiau
 BINARY
 DATASET STRUCTURED_POINTS
 DIMENSIONS    {N+1}   {N+1}   {N+1}
 ORIGIN    0.000   0.000   0.000
-SPACING   {x:.7e} {x:.7e} {x:.7e}
+SPACING   {1:.7e} {1:.7e} {1:.7e}
 CELL_DATA   {N*N*N}
 SCALARS MaterialId unsigned_short
 LOOKUP_TABLE default
