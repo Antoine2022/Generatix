@@ -216,12 +216,13 @@ def generate_micro(R,lrf_list,distribution_type):
             if distribution_type=="random":
                 theta=np.arccos(1-2*uniform(0,1))
                 phi=uniform(0,2*np.pi)
-            if distribution_type==theta0:
-                theta=np.arccos(np.cos(theta0)*uniform(0,1))
-                phi=uniform(0,2*np.pi)
             if distribution_type=="aligned":
                 theta=np.pi/2
                 phi=0.
+            else:
+                theta0=distribution_type
+                theta=np.arccos(np.cos(theta0)*uniform(0,1))
+                phi=uniform(0,2*np.pi)
             normal=np.array([np.sin(theta)*np.cos(phi),np.sin(theta)*np.sin(phi),np.cos(theta)])
             angle=np.array([theta*180/np.pi,phi*180/np.pi,0])
             c=np.array([[center[0],center[1],center[2]],[normal[0],normal[1],normal[2]],[angle[0],angle[1],angle[2]],[l,r,0]])
